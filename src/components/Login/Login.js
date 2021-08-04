@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.config';
 import { UserContext } from '../../App';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 const Login = () => {
     if(firebase.apps.length === 0){
@@ -49,7 +49,7 @@ const Login = () => {
         <div>
             <h2>Login And Secure Browse</h2>
             <button onClick={handleSignIn}>Google SignIn</button><br />
-            <button><a href='/'>Home</a></button>
+            <button><Link to='/'>Home</Link></button>
         </div>
     );
 };
