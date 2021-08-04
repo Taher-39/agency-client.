@@ -12,7 +12,7 @@ const Review = () => {
         setReview(newReview)
     }
     const handleSubmit = (e) => {
-        fetch('http://localhost:4000/postReview', {
+        fetch('https://protected-plateau-36631.herokuapp.com/postReview', {
             method: 'POST',
             headers: {
                "Content-Type": "application/json"

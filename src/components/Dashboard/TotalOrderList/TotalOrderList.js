@@ -5,7 +5,7 @@ import TotalOrderListTable from './TotalOrderListTable';
 const TotalOrderList = () => {
     const [totalOrders, setTotalOrders] = useState([])
     useEffect(()=>{
-        fetch('http://localhost:4000/getTotalOrders')
+        fetch('https://protected-plateau-36631.herokuapp.com/getTotalOrders')
             .then(res => res.json())
             .then(data => {
                 setTotalOrders(data)

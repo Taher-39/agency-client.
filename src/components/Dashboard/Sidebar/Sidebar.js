@@ -6,7 +6,7 @@ const Sidebar = () => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [loggedInUser, setLoggedInUser] = useContext(UserContext)
     useEffect(() => {
-        fetch('http://localhost:4000/isAdmin',{
+        fetch('https://protected-plateau-36631.herokuapp.com/isAdmin',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

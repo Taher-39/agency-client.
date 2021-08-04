@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const Feedback = () => {
     const [userFeedback, setUserFeedback] = useState([])
     useEffect(() => {
-        fetch('http://localhost:4000/getReview')
+        fetch('https://protected-plateau-36631.herokuapp.com/getReview')
             .then(res => res.json())
             .then(data => setUserFeedback(data))
     }, [])

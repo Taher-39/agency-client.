@@ -25,7 +25,7 @@ const UploadOrder = () => {
         newOrderForm.append('customerPrice', orderDetails.price)
         newOrderForm.append('file', orderFile)
         
-        fetch('http://localhost:4000/uploadOrder', {
+        fetch('https://protected-plateau-36631.herokuapp.com/uploadOrder', {
             method: 'POST',
             body: newOrderForm
         }).then(res => res.json())

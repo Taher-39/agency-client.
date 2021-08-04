@@ -21,7 +21,7 @@ const AddService = () => {
         serviceFormData.append("file", file)
         serviceFormData.append("description", description)
 
-        fetch('http://localhost:4000/addService',{
+        fetch('https://protected-plateau-36631.herokuapp.com/addService',{
             method: 'POST',
             body: serviceFormData
         }).then(res => res.json())

@@ -10,7 +10,7 @@ const AddAdmin = () => {
     }
     console.log(admin)
     const handleSubmit = (e) => {
-        fetch("http://localhost:4000/addAdmin", {
+        fetch("https://protected-plateau-36631.herokuapp.com/addAdmin", {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
