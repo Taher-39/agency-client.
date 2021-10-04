@@ -1,7 +1,23 @@
 import React from 'react';
 
 const TotalOrderListTable = ({ totalOrders }) => {
-    // const {name, email, category, description} = order;
+    const handleStatusChange = (e, id) => {
+        console.log(id, e.target.value)
+        const statusData = {id, status: e.target.value};
+
+        fetch(`https://protected-plateau-36631.herokuapp.com/updateStatus/${id}`, {
+            method: "PATCH", 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(statusData)
+        }).then(res => res.json())
+        .then(data => {
+            if(data){
+                alert("Status Changed Successfully.")
+            }
+        })
+    }
     return (
         <div>
             <div className='bg-light rounded container p-4 shadow'>
@@ -22,7 +38,13 @@ const TotalOrderListTable = ({ totalOrders }) => {
                                 <td>{order.email}</td>
                                 <td>{order.category}</td>
                                 <td>{order.description}</td>
-                                <td>Pending</td>
+                                <td>
+                                    <select onChange={(e) => handleStatusChange(e, order._id)} name="status" id="status">
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="done">Done</option>
+                                    </select>
+                                </td>
                             </tr>
                         )}
                     </tbody>

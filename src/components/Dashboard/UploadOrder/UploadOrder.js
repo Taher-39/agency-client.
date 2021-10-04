@@ -6,9 +6,8 @@ const UploadOrder = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext)
     const [orderDetails, setOrderDetails] = useState({})
     const [orderFile, setOrderFile] = useState()
-
     const handleBlur = (e) =>{
-        const newOrderDetails = { ...orderDetails }
+        const newOrderDetails = { ...orderDetails, status: 'pending' }
         newOrderDetails[e.target.name] = e.target.value
         setOrderDetails(newOrderDetails)  
     }
@@ -23,6 +22,7 @@ const UploadOrder = () => {
         newOrderForm.append('customerCategory', orderDetails.category)
         newOrderForm.append('customerDescription', orderDetails.projectDetails)
         newOrderForm.append('customerPrice', orderDetails.price)
+        newOrderForm.append('status', orderDetails.status)
         newOrderForm.append('file', orderFile)
         
         fetch('https://protected-plateau-36631.herokuapp.com/uploadOrder', {
@@ -30,7 +30,9 @@ const UploadOrder = () => {
             body: newOrderForm
         }).then(res => res.json())
         .then(data => {
-                alert('Order Submitted, Check Service List')
+                if(data){
+                    alert('Order Submitted, Check Service List')
+                }
         })
         e.preventDefault()
     }

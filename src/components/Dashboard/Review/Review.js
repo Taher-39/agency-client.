@@ -19,7 +19,9 @@ const Review = () => {
             },
             body: JSON.stringify(review)
         }).then(res => {
-            alert("Review Added Successfully.")
+            if(res){
+                alert("Review Added Successfully.")
+            }
         })
         e.preventDefault()
     }

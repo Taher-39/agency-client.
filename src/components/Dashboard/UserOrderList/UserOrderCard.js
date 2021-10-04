@@ -6,9 +6,11 @@ const UserOrderCard = ({order}) => {
             <div className="shadow p-4">
                 <div className="d-flex justify-content-around">
                     <div className="img">
-                        <img style={{ width: '50px', height: '50px' }} src={`data:image/png;base64, ${order.image.img}`} alt="" />
+                        <img style={{ width: '50px', height: '50px' }} src={`data:image/png;base64, ${order?.image?.img}`} alt="" />
                     </div>
-                    <div className="status">pending</div>
+                    <div className="status ml-4">
+                        {order?.status}
+                    </div>
                 </div>
                 <h4>{order.category}</h4>
                 <p>{order.description}</p>
