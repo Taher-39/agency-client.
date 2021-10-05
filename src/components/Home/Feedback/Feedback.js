@@ -10,7 +10,7 @@ const Feedback = () => {
     return (
         <div className='my-5'>
             <div className="container">
-                <h2 className='text-center my-5'>User Feedback</h2>
+                <h1 className='text-center my-5'><span className='text-service'>Clients</span> <span className='text-sp'>Feedback</span></h1>
                 <div className='row'>
                     {
                         userFeedback.map(review => <div key={review._id} className='col-md-4 d-flex align-items-stretch my-4'>

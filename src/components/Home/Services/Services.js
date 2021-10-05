@@ -13,12 +13,12 @@ const Services = () => {
     return (
         <div>
             <div className="container">
-                <h3 className='text-center my-5'>Our Recent Services</h3>
+                <h1 className='text-center my-5'><span className='text-service'>Provide awesome</span> <span className='text-sp'>services</span></h1>
                 <div className='row'>
                     {
                         services.length ?
                             services.map(serviceData => <ServiceCard key={serviceData._id} serviceData={serviceData}></ServiceCard>)
-                            : <h4 className='text-center pt-5 text-secondary'>Loading</h4>
+                            : <h4 className='text-center pt-5 text-secondary'>Loading...</h4>
                     }
                 </div>
             </div>
