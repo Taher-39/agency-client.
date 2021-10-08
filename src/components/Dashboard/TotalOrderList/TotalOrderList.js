@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
 import TotalOrderListTable from './TotalOrderListTable';
+import navLogo from '../../../images/logos/logo.png';
+import { UserContext } from '../../../App';
 
 const TotalOrderList = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext)
     const [totalOrders, setTotalOrders] = useState([])
     useEffect(()=>{
         fetch('https://protected-plateau-36631.herokuapp.com/getTotalOrders')
@@ -13,17 +17,34 @@ const TotalOrderList = () => {
     }, [])
     return (
         <div>
-            <div className="left-side">
-                <Sidebar></Sidebar>
+            <div style={{backgroundColor: '#d6d0c2'}}>
+                <div className="d-sm-flex justify-content-around py-4">
+                    <div>
+                        <Link to="/">
+                            <img src={navLogo} style={{width: '150px'}} alt="" />
+                        </Link>
+                    </div>
+                    <div className='page-name'>
+                        <h2>Total Order List</h2>
+                    </div>
+                    <div>
+                        <h5 className='user'>{loggedInUser.name}</h5>
+                    </div>
+                </div>
             </div>
-            <div className="right-side">
-                <h2 className='text-secondary text-center my-4'>Total Order List</h2>
-                <div>
-                    {   
-                        totalOrders.length ?
-                        <TotalOrderListTable totalOrders={totalOrders}></TotalOrderListTable>
-                        : <h4 className='text-center pt-5 text-secondary'>Loading</h4>
-                    }
+
+            <div className='row'>
+                <div className="left-side col-md-2">
+                    <Sidebar></Sidebar>
+                </div>
+                <div className="right-side col-md-10 bg-light rounded p-5">
+                    <div>
+                        {   
+                            totalOrders.length ?
+                            <TotalOrderListTable totalOrders={totalOrders}></TotalOrderListTable>
+                            : <h4 className='text-center pt-5 text-secondary'>Loading...</h4>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

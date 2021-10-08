@@ -3,7 +3,6 @@ import './ServiceCard.css'
 
 const ServiceCard = ({ serviceData }) => {
     const {title, description, image} = serviceData;
-    console.log(title);
     return (
         <div className='col-md-4 d-flex align-items-stretch my-2 zoom'>
             <div className="shadow p-4">

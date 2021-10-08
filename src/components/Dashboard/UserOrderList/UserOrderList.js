@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import navLogo from '../../../images/logos/logo.png';
 import { UserContext } from '../../../App';
 import Sidebar from '../Sidebar/Sidebar';
 import UserOrderCard from './UserOrderCard';
@@ -12,18 +14,34 @@ const UserOrderList = () => {
             .then(data => setUserOrders(data))
     },[])
     return (
-        <div className='container'>
-            <div className="left-side">
-                <Sidebar></Sidebar>
+        <div>
+            <div style={{backgroundColor: '#d6d0c2'}}>
+                <div className="d-sm-flex justify-content-around py-4">
+                    <div>
+                        <Link to="/">
+                            <img src={navLogo} style={{width: '150px'}} alt="" />
+                        </Link>
+                    </div>
+                    <div className='page-name'>
+                        <h2>Order List</h2>
+                    </div>
+                    <div>
+                        <h5 className='user'>{loggedInUser.name}</h5>
+                    </div>
+                </div>
             </div>
-            <div className="right-side">
-                <h3 className='text-secondary text-center my-4'>Order List</h3>
-                <div className="row">
-                    {
-                        userOrders.length ?
-                        userOrders.map(order => <UserOrderCard order={order} key={order._id}></UserOrderCard>)
-                            : <h4 className='text-center pt-5 text-secondary'>Loading</h4>
-                    }
+            <div className='row'>
+                <div className="left-side col-md-2">
+                    <Sidebar></Sidebar>
+                </div>
+                <div className="right-side col-md-10 bg-light rounded p-5">
+                    <div className="row">
+                        {
+                            userOrders.length ?
+                            userOrders.map(order => <UserOrderCard order={order} key={order._id}></UserOrderCard>)
+                                : <h4 className='text-center pt-5 text-secondary'>Loading...</h4>
+                        }
+                    </div>
                 </div>
             </div>
         </div>

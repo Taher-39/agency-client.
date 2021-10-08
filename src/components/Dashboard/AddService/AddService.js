@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
+import navLogo from '../../../images/logos/logo.png'; 
+import { UserContext } from '../../../App';
 
 const AddService = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext)
     const [serviceName, setServiceName] = useState()
     const [description, setDescription] = useState()
     const [file, setFile] = useState()
@@ -36,29 +40,46 @@ const AddService = () => {
     }
     return (
         <div>
-            <div className="left-side">
+            <div style={{backgroundColor: '#FBD062'}}>
+                <div className="d-sm-flex justify-content-around py-4">
+                    <div>
+                        <Link to="/">
+                            <img src={navLogo} style={{width: '150px'}} alt="" />
+                        </Link>
+                    </div>
+                    <div className='page-name'>
+                        <h2>Order</h2>
+                    </div>
+                    <div>
+                        <h5 className='user'>{loggedInUser.name}</h5>
+                    </div>
+                </div>
+            </div>
+            <div className='row'>
+            <div className="left-side col-md-2">
                 <Sidebar></Sidebar>
             </div>
-            <div className="right-side">
+            <div className="right-side col-md-10 bg-light p-5">
                 <form onSubmit={handleFormSubmit}>
                     <div className="input-area">
                         <label >Service Title
-                            <input type="text" placeholder='App-Develop' onBlur={handleServiceName}/>
-                        </label> <br />
+                            <input className='form-control mb-3' type="text" placeholder='App-Develop' required onBlur={handleServiceName}/>
+                        </label><br />
 
                         <label>Icon
-                            <input type="file" name='icon' onChange={handleFileChange}/>
-                        </label> <br />
+                            <input className='form-control mb-3' type="file" name='icon' required onChange={handleFileChange}/>
+                        </label><br />
 
                         <label>Description
                            
-                        </label><br />
-                        <textarea rows="4" cols="50" onBlur={handleDescription} />
+                        </label>
+                        <textarea className='form-control w-50 mb-3' rows="4" cols="50" onBlur={handleDescription} required />
                         
                     </div>
-                    <button type="submit">Submit</button>
+                    <button className='btn btn-bg text-light' type="submit">Submit</button>
                 </form>
             </div>
+        </div>
         </div>
     );
 };

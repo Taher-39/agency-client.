@@ -46,10 +46,15 @@ const Login = () => {
         });
     }
     return (
-        <div>
-            <h2>Login And Secure Browse</h2>
-            <button onClick={handleSignIn}>Google SignIn</button><br />
-            <button><Link to='/'>Home</Link></button>
+        <div className='text-center pt-5 bg-dark text-light' style={{minHeight: '100vh'}}>
+            <div>
+                <img src="" alt="" />
+                <div className='rounded py-5 my-0 mx-auto w-50 shadow'>
+                    <h2>Login With</h2>
+                    <button onClick={handleSignIn} className='btn btn-danger my-2'>Google SignIn</button><br />
+                    <button className='btn btn-success my-1 px-4'><Link className='text-light text-decoration-none' to='/'>Home</Link></button>
+                </div>
+            </div>
         </div>
     );
 };

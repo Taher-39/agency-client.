@@ -20,6 +20,10 @@
 .btn:active {
   transform: translateY(-3px);
 }
+.right-side{
+  background-color: #E5E5E5;
+}
+
 
 /* media query */
 @media only screen and (min-width: 600px) {
@@ -49,5 +53,11 @@
    }
    .header-left{
        padding: 0 50px;
+   }
+   .page-name{
+    display: none;
+   }
+   .user{
+     padding-top: 50px;
    }
 }

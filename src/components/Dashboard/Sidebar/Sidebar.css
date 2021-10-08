@@ -1,0 +1,10 @@
+.sidebar-links{
+    list-style: none;
+}
+.sidebar-link{
+    text-decoration: none;
+    color:black;
+}
+.sidebar-links:active{
+    color: #009444;
+}

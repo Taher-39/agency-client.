@@ -2,7 +2,7 @@ import React from 'react';
 
 const UserOrderCard = ({order}) => {
     return (
-        <div className='col-md-4 d-flex align-items-stretch my-3'>
+        <div className='col-md-6 d-flex align-items-stretch my-3'>
             <div className="shadow p-4">
                 <div className="d-flex justify-content-around">
                     <div className="img">
