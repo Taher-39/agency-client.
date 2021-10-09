@@ -23,7 +23,7 @@ const UserOrderList = () => {
                         </Link>
                     </div>
                     <div className='page-name'>
-                        <h2>Order List</h2>
+                        <h2>Service List</h2>
                     </div>
                     <div>
                         <h5 className='user'>{loggedInUser.name}</h5>
