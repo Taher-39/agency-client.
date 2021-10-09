@@ -17,7 +17,7 @@ const TotalOrderList = () => {
     }, [])
     return (
         <div>
-            <div style={{backgroundColor: '#d6d0c2'}}>
+            <div style={{backgroundColor: '#FBD062'}} className='dashboard-top'>
                 <div className="d-sm-flex justify-content-around py-4">
                     <div>
                         <Link to="/">

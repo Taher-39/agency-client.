@@ -31,7 +31,7 @@ const AddService = () => {
         }).then(res => res.json())
         .then(data => {
             if(data){
-                alert("Data Added")
+                alert("Services Added Successfully.")
             }
         })
         .catch(err => console.log(err))
@@ -40,7 +40,7 @@ const AddService = () => {
     }
     return (
         <div>
-            <div style={{backgroundColor: '#FBD062'}}>
+            <div style={{backgroundColor: '#FBD062'}} className='dashboard-top'>
                 <div className="d-sm-flex justify-content-around py-4">
                     <div>
                         <Link to="/">
@@ -48,7 +48,7 @@ const AddService = () => {
                         </Link>
                     </div>
                     <div className='page-name'>
-                        <h2>Order</h2>
+                        <h2>Add Service</h2>
                     </div>
                     <div>
                         <h5 className='user'>{loggedInUser.name}</h5>
@@ -56,7 +56,7 @@ const AddService = () => {
                 </div>
             </div>
             <div className='row'>
-            <div className="left-side col-md-2 btn-bg">
+            <div className="left-side col-md-2 btn-bg sidebar-dash">
                 <Sidebar></Sidebar>
             </div>
             <div className="right-side col-md-10 bg-light p-5">

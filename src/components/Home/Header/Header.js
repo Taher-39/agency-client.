@@ -11,9 +11,9 @@ const Header = () => {
                 <div className="row py-5">
                     <div className="col-md-6 pb-5 header-left">
                         <h1 className='text-header '>
-                            <span>Let's Grow Your</span><br />
-                            <span>Brand To The</span><br />
-                            <span>Next Level</span>
+                            <span className='header-top'>Let's Grow Your</span><br />
+                            <span className='header-middle'>Brand To The</span><br />
+                            <span className='header-bottom'>Next Level</span>
                         </h1>
                         <p className='text-description py-3'>
                             Online Agency is your instant link to thousands <br />

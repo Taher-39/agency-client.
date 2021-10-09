@@ -14,7 +14,7 @@ const Feedback = () => {
                 <div className='row'>
                     {
                         userFeedback.map(review => <div key={review._id} className='col-md-4 d-flex align-items-stretch my-4'>
-                            <div className="shadow p-4">
+                            <div className="shadow p-4 btn-bg text-light rounded" style={{minWidth: '300px'}}>
                                 <h3 className='text-center'>{review.name}</h3>
                                 <h5 className='text-center'>{review.designation}</h5>
                                 <p>{review.description}</p>

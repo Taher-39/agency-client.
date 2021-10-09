@@ -31,7 +31,7 @@ const AddAdmin = () => {
     }
     return (
         <div>
-            <div>
+            <div  style={{backgroundColor: '#FBD062'}} className='dashboard-top'>
                 <div className="d-sm-flex justify-content-around py-4">
                     <div>
                         <Link to="/">
@@ -47,7 +47,7 @@ const AddAdmin = () => {
                 </div>
             </div>
             <div className='row'>
-                <div className="left-side col-md-2 btn-bg">
+                <div className="left-side col-md-2 btn-bg sidebar-dash">
                     <Sidebar></Sidebar>
                 </div>
                 <div className="right-side col-md-10 bg-light rounded p-5">
