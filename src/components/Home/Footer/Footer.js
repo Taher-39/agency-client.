@@ -1,7 +1,6 @@
 import React from 'react';
 import navLogo from '../../../images/logos/logo.png';
 import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
     return (
