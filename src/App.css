@@ -31,7 +31,7 @@
     border-bottom: none;
   } 
   .login{
-      width: 100px;
+      min-width: 100px;
   }
   .header-img{
     width: 500px;
@@ -42,22 +42,25 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .header-img{
-    width: 280px;
-    }
-    .header{
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
-   }
-   .client{
-       display: none;
-   }
-   .header-left{
-       padding: 0 50px;
-   }
-   .page-name{
+  .header-img{
+  width: 280px;
+  }
+  .header{
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  }
+  .client{
     display: none;
-   }
-   .user{
-     padding-top: 50px;
-   }
+  }
+  .header-left{
+    padding: 0 50px;
+  }
+  .page-name{
+    display: none;
+  }
+  .user{
+    padding-top: 50px;
+  }
+  .login{
+    max-width: 50%;
+  }
 }

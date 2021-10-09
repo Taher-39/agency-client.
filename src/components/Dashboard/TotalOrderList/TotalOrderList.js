@@ -34,7 +34,7 @@ const TotalOrderList = () => {
             </div>
 
             <div className='row'>
-                <div className="left-side col-md-2">
+                <div className="left-side col-md-2 btn-bg">
                     <Sidebar></Sidebar>
                 </div>
                 <div className="right-side col-md-10 bg-light rounded p-5">

@@ -26,7 +26,7 @@ const Review = () => {
             }
         })
         e.preventDefault()
-    }/* d6d0c2 */
+    }
      return(
         <div>
             <div style={{backgroundColor: '#FBD062'}}>
@@ -45,7 +45,7 @@ const Review = () => {
                 </div>
             </div>
             <div className='row'>
-                <div className="left-side col-md-2" >
+                <div className="left-side col-md-2 btn-bg" >
                     <Sidebar></Sidebar>
                 </div>
                 <div className="right-side col-md-10 bg-light p-5">

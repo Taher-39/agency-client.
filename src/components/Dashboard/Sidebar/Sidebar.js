@@ -25,7 +25,7 @@ const Sidebar = () => {
     },[])
 
     return (
-        <div>
+        <div className='py-5'>
             <nav>
                 <ul>
                     <li className='sidebar-links pb-2'><Link className='sidebar-link' to="/"><MdHome /> Home</Link></li>

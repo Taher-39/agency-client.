@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../../App';
 import navLogo from '../../../images/logos/logo.png';
 import './Navbar.css';
 const Navbar = () => {
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     return(
         <div className="header-bg">
             <nav class="navbar navbar-expand-lg navbar-light container">
@@ -25,7 +27,7 @@ const Navbar = () => {
                                 <Link class="nav-link nav-link-border" to="#">Our-Teams</Link>
                             </li>
                             <li class="nav-item">
-                                <Link class="nav-link login btn" style={{color: "#fff", padding: '10px 30px'}} to="/signUp">Login</Link>
+                                <Link class="nav-link login btn" style={{color: "#fff", padding: '10px 30px'}} to="/signUp">{loggedInUser.name ? <span>{loggedInUser.name}</span> : "SignUp"}</Link>
                             </li>
                         </ul>
                     </div>

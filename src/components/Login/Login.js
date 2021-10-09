@@ -4,6 +4,7 @@ import "firebase/auth";
 import firebaseConfig from './firebase.config';
 import { UserContext } from '../../App';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import navLogo from '../../images/logos/logo.png';
 
 const Login = () => {
     if(firebase.apps.length === 0){
@@ -46,13 +47,24 @@ const Login = () => {
         });
     }
     return (
-        <div className='text-center pt-5 bg-dark text-light' style={{minHeight: '100vh'}}>
+        <div className='text-center pt-5 text-light' style={{minHeight: '100vh', backgroundColor: 'whitesmoke'}}>
             <div>
-                <img src="" alt="" />
-                <div className='rounded py-5 my-0 mx-auto w-50 shadow'>
-                    <h2>Login With</h2>
-                    <button onClick={handleSignIn} className='btn btn-danger my-2'>Google SignIn</button><br />
-                    <button className='btn btn-success my-1 px-4'><Link className='text-light text-decoration-none' to='/'>Home</Link></button>
+                <div className='text-center text-light py-4'>
+                    <img src={navLogo} alt="" style={{width: '150px'}} />
+                </div>
+                <div>
+                    {
+                        loggedInUser.email ? 
+                            <div className='text-center'>
+                                <button onClick={() => setLoggedInUser({})} className='btn btn-danger my-2 w-50'>Sign-Out</button><br />
+                            </div>
+                        : 
+                        <div className='rounded py-5 my-0 mx-auto w-50 shadow'>
+                            <h2 style={{color: '#000'}}>Login With</h2>
+                            <button onClick={handleSignIn} className='btn btn-danger my-2'>Google SignIn</button><br />
+                            <button className='btn btn-success my-1 px-4'><Link className='text-light text-decoration-none' to='/'>Home</Link></button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

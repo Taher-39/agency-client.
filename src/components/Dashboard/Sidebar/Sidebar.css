@@ -3,8 +3,11 @@
 }
 .sidebar-link{
     text-decoration: none;
-    color:black;
+    color: #fff;
 }
-.sidebar-links:active{
+
+.sidebar-link:hover{
     color: #009444;
+    transform: translateY(-7px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); 
 }
