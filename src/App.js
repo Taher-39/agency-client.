@@ -1,36 +1,48 @@
-import './App.css';
-import Home from './components/Home/Home/Home';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-import Dashboard from './components/Dashboard/Dashboard/Dashboard';
-import AddService from './components/Dashboard/AddService/AddService';
-import { createContext, useState } from 'react';
-import Login from './components/Login/Login';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import UploadOrder from './components/Dashboard/UploadOrder/UploadOrder';
-import TotalOrderList from './components/Dashboard/TotalOrderList/TotalOrderList';
-import UserOrderList from './components/Dashboard/UserOrderList/UserOrderList';
-import Review from './components/Dashboard/Review/Review';
-import AddAdmin from './components/Dashboard/AddAdmin/AddAdmin';
+import "./App.css";
+import Home from "./components/Home/Home/Home";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Dashboard from "./components/Dashboard/Dashboard/Dashboard";
+import AddService from "./components/Dashboard/AddService/AddService";
+import { createContext, useState } from "react";
+import Login from "./components/Login/Login";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import UploadOrder from "./components/Dashboard/UploadOrder/UploadOrder";
+import TotalOrderList from "./components/Dashboard/TotalOrderList/TotalOrderList";
+import UserOrderList from "./components/Dashboard/UserOrderList/UserOrderList";
+import Review from "./components/Dashboard/Review/Review";
+import AddAdmin from "./components/Dashboard/AddAdmin/AddAdmin";
+import ManageServices from "./components/Dashboard/ManageServices/ManageServices";
+import Payment from "./components/Dashboard/Payment/Payment";
+import RegisterScreen from "./components/Home/RegisterScreen/RegisterScreen";
+import AddToken from "./components/Dashboard/AddToken/AddToken";
+import AddAmount from "./components/Dashboard/AddAmount/AddAmount";
 
-export const UserContext = createContext()
+export const UserContext = createContext();
+
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState({})
+  const [loggedInUser, setLoggedInUser] = useState({});
+
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
-      <Router>
+        <Router>
           <Switch>
             <PrivateRoute path="/dashboard">
               <Dashboard></Dashboard>
             </PrivateRoute>
+            <PrivateRoute path="/add-token">
+              <AddToken />
+            </PrivateRoute>
+            <PrivateRoute path="/addAmount">
+              <AddAmount />
+            </PrivateRoute>
             <Route path="/signUp">
               <Login></Login>
             </Route>
-            <PrivateRoute path="/uploadOrder">
-                <UploadOrder></UploadOrder>
+            <Route path="/register">
+              <RegisterScreen />
+            </Route>
+            <PrivateRoute path="/uploadOrder/:id">
+              <UploadOrder></UploadOrder>
             </PrivateRoute>
             <PrivateRoute path="/getUserReview">
               <Review></Review>
@@ -42,16 +54,22 @@ function App() {
               <UserOrderList></UserOrderList>
             </PrivateRoute>
             <PrivateRoute path="/addService">
-                <AddService></AddService>
+              <AddService></AddService>
             </PrivateRoute>
             <PrivateRoute path="/addAdmin">
               <AddAdmin></AddAdmin>
+            </PrivateRoute>
+            <PrivateRoute path="/manage-services">
+              <ManageServices />
+            </PrivateRoute>
+            <PrivateRoute path="/payment">
+              <Payment />
             </PrivateRoute>
             <Route exact path="/">
               <Home />
             </Route>
           </Switch>
-      </Router>
+        </Router>
     </UserContext.Provider>
   );
 }

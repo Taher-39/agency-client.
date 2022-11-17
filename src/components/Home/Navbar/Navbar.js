@@ -1,40 +1,70 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { UserContext } from '../../../App';
-import navLogo from '../../../images/logos/logo.png';
-import './Navbar.css';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../../App";
+import navLogo from "../../../images/logos/logo.png";
+import "./Navbar.css";
 const Navbar = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-    return(
-        <div className="header-bg">
-            <nav class="navbar navbar-expand-lg navbar-light container">
-                <div class="container-fluid">
-                    <Link class="navbar-brand" to="/">
-                        <img src={navLogo} style={{width: '150px'}} alt="" />
-                    </Link>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse link" id="navbarNav">
-                        <ul class="navbar-nav justify-content-end">
-                            <li class="nav-item">
-                                <Link class="nav-link nav-link-border active" aria-current="page" to='/'>Home</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link nav-link-border" to="/dashboard">Dashboard</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link nav-link-border" to="#">Our-Teams</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link login btn" style={{color: "#fff", padding: '10px 30px'}} to="/signUp">{loggedInUser.name ? <span>{loggedInUser.name}</span> : "SignUp"}</Link>
-                            </li>
-                        </ul>
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  return (
+    <div className="header-bg">
+      <nav className="navbar navbar-expand-lg navbar-light container">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to="/">
+            <img src={navLogo} style={{ width: "150px" }} alt="" />
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse link" id="navbarNav">
+            <ul className="navbar-nav justify-content-end">
+              <li className="nav-item">
+                <Link
+                  className="nav-link nav-link-border active"
+                  aria-current="page"
+                  to="/"
+                >
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link nav-link-border" to="/dashboard">
+                  Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link nav-link-border" to="#">
+                  Our-Teams
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link login btn"
+                  style={{ color: "#fff", padding: "10px 30px" }}
+                  to="/signUp"
+                >
+                  {loggedInUser.name ? (
+                    <div>
+                      <span>{loggedInUser.name}</span>
                     </div>
-                </div>
-            </nav>
+                  ) : (
+                    "SignUp"
+                  )}
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-    )
-}
+      </nav>
+    </div>
+  );
+};
 
 export default Navbar;
