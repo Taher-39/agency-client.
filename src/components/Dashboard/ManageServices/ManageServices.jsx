@@ -4,13 +4,13 @@ import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../images/logos/logo.png";
 import { Link } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { MdOutlineDesignServices } from "react-icons/md";
-import EditServiceModal from "./EditServiceModal";
+// import { MdOutlineDesignServices } from "react-icons/md";
+// import EditServiceModal from "./EditServiceModal";
 
 const ManageServices = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [services, setServices] = useState([]);
-  const [modalIsOpen, setIsOpen] = useState(false);
+  // const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:4000/api/v1/getService")
@@ -32,17 +32,17 @@ const ManageServices = () => {
     }
   };
 
-  const updateHandler = (id) => {
-    alert(id);
-  };
+  // const updateHandler = (id) => {
+  //   alert(id);
+  // };
 
-  function closeModal() {
-    setIsOpen(false);
-  }
+  // function closeModal() {
+  //   setIsOpen(false);
+  // }
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  // function openModal() {
+  //   setIsOpen(true);
+  // }
 
   return (
     <div>
@@ -73,7 +73,7 @@ const ManageServices = () => {
                   <th>Service Name</th>
                   <th>Description</th>
                   <th>Image</th>
-                  <th>Mange</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -96,7 +96,7 @@ const ManageServices = () => {
                         <RiDeleteBin5Line />
                       </button>
 
-                      <button
+                      {/* <button
                         className="cursor-pointer btn text-success"
                         onClick={openModal}
                       >
@@ -106,7 +106,7 @@ const ManageServices = () => {
                         modalIsOpen={modalIsOpen}
                         closeModal={closeModal}
                         item={item}
-                      />
+                      /> */}
                     </td>
                   </tr>
                 ))}

@@ -52,7 +52,8 @@ const UploadOrder = () => {
     newOrderForm.append("file", orderFile);
 
     if (loggedInUser.amount >= costPrice) {
-      const currentWalletcostPrice = loggedInUser.amount - costPrice;
+      const currentWalletcostPrice =
+        Number(loggedInUser.amount) - Number(costPrice);
       newOrderForm.append("newAmount", currentWalletcostPrice);
 
       fetch("http://localhost:4000/api/v1/uploadOrder", {
@@ -146,7 +147,10 @@ const UploadOrder = () => {
         </div>
         <div className="col-md-4 pt-5 bg-light">
           <h5>
-            Available Wallet Balance: <span>{loggedInUser.amount} TK</span>
+            Available Wallet Balance:{" "}
+            <span>
+              {loggedInUser.amount == 0 ? 0 : loggedInUser.amount} TK
+            </span>
           </h5>
         </div>
       </div>
