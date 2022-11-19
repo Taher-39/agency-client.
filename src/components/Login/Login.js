@@ -45,7 +45,7 @@ const Login = () => {
       password: password,
     };
 
-    fetch("http://localhost:4000/api/v1/authUser", {
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/authUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

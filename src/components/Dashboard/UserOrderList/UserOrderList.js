@@ -11,7 +11,8 @@ const UserOrderList = () => {
 
   useEffect(() => {
     fetch(
-      "http://localhost:4000/api/v1/getUserOrders?email=" + loggedInUser.email
+      "https://protected-plateau-36631.herokuapp.com/api/v1/getUserOrders?email=" +
+        loggedInUser.email
     )
       .then((res) => res.json())
       .then((data) => setUserOrders(data));
@@ -35,7 +36,7 @@ const UserOrderList = () => {
         </div>
       </div>
       <div className="row">
-        <div className="left-side col-md-2 btn-bg" style={{height: "100vh"}}>
+        <div className="left-side col-md-2 btn-bg" style={{ height: "100vh" }}>
           <Sidebar></Sidebar>
         </div>
         <div className="right-side col-md-10 bg-light rounded p-5">
@@ -45,9 +46,7 @@ const UserOrderList = () => {
                 <UserOrderCard order={order} key={order._id}></UserOrderCard>
               ))
             ) : (
-              <h4 className="text-center pt-5 text-secondary">
-                Loading...
-              </h4>
+              <h4 className="text-center pt-5 text-secondary">Loading...</h4>
             )}
           </div>
         </div>

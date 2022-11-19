@@ -13,7 +13,7 @@ const ManageServices = () => {
   // const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/v1/getService")
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/getService")
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
@@ -22,9 +22,12 @@ const ManageServices = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure for delete..?")) {
-      fetch(`http://localhost:4000/api/v1/manage/${id}`, {
-        method: "DELETE",
-      }).then((result) => {
+      fetch(
+        `https://protected-plateau-36631.herokuapp.com/api/v1/manage/${id}`,
+        {
+          method: "DELETE",
+        }
+      ).then((result) => {
         if (result) {
           alert(`Service deleted when id: ${id}`);
         }

@@ -25,8 +25,7 @@ const AddService = () => {
     serviceFormData.append("file", file);
     serviceFormData.append("description", description);
 
-
-    fetch("http://localhost:4000/api/v1/addService", {
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/addService", {
       method: "POST",
       body: serviceFormData,
     })

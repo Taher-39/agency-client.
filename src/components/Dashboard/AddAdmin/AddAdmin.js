@@ -7,7 +7,7 @@ import { UserContext } from "../../../App";
 const AddAdmin = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [admin, setAdmin] = useState({});
-  
+
   const handleBlur = (e) => {
     const adminEmail = { issueDate: new Date() };
     adminEmail[e.target.name] = e.target.value;
@@ -15,7 +15,7 @@ const AddAdmin = () => {
   };
 
   const handleSubmit = (e) => {
-    fetch("http://localhost:4000/api/v1/addAdmin", {
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/addAdmin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

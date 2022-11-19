@@ -26,7 +26,7 @@ const AddToken = () => {
       amount: amount,
       token: token,
     };
-    fetch("http://localhost:4000/api/v1/addToken", {
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/addToken", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const AddToken = () => {
         if (data) {
           setMessage("Token Added Successfully");
           setToken("");
-          setAmount ("");
+          setAmount("");
         }
       })
       .catch((err) => setError(err.message));

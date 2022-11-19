@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../../../App";
 import {
   MdHome,
-  MdAddShoppingCart,
   MdCommentBank,
   MdDescription,
   MdOutlineAdminPanelSettings,
@@ -19,7 +18,7 @@ const Sidebar = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/v1/isAdmin", {
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/isAdmin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

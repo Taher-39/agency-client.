@@ -28,13 +28,16 @@ const RegisterScreen = () => {
         password: password,
         confirmPassword: confirmPassword,
       };
-      fetch("http://localhost:4000/api/v1/resisterUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registerData),
-      })
+      fetch(
+        "https://protected-plateau-36631.herokuapp.com/api/v1/resisterUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(registerData),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data) {

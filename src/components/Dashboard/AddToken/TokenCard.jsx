@@ -6,16 +6,19 @@ const TokenCard = () => {
   const [allValidTokens, setAllValidTokens] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/v1/getValidToken")
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/getValidToken")
       .then((res) => res.json())
       .then((data) => setAllValidTokens(data));
   }, [allValidTokens]);
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure for delete..?")) {
-      fetch(`http://localhost:4000/api/v1/manage-token/${id}`, {
-        method: "DELETE",
-      }).then((result) => {
+      fetch(
+        `https://protected-plateau-36631.herokuapp.com/api/v1/manage-token/${id}`,
+        {
+          method: "DELETE",
+        }
+      ).then((result) => {
         if (result) {
           alert(`Token deleted successfully when id: ${id}`);
         }

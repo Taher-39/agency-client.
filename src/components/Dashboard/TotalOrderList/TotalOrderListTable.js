@@ -5,13 +5,16 @@ const TotalOrderListTable = ({ totalOrders }) => {
     console.log(id, e.target.value);
     const statusData = { id, status: e.target.value };
 
-    fetch(`http://localhost:4000/api/v1/updateStatus/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(statusData),
-    })
+    fetch(
+      `https://protected-plateau-36631.herokuapp.com/api/v1/updateStatus/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(statusData),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data) {

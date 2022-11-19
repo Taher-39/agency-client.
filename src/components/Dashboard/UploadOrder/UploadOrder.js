@@ -14,7 +14,9 @@ const UploadOrder = () => {
   // fetch total order
   const [service, setService] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:4000/api/v1/get-single-service/${id}`)
+    fetch(
+      `https://protected-plateau-36631.herokuapp.com/api/v1/get-single-service/${id}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setService(data);
@@ -56,10 +58,13 @@ const UploadOrder = () => {
         Number(loggedInUser.amount) - Number(costPrice);
       newOrderForm.append("newAmount", currentWalletcostPrice);
 
-      fetch("http://localhost:4000/api/v1/uploadOrder", {
-        method: "POST",
-        body: newOrderForm,
-      })
+      fetch(
+        "https://protected-plateau-36631.herokuapp.com/api/v1/uploadOrder",
+        {
+          method: "POST",
+          body: newOrderForm,
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           if (data) {
@@ -148,9 +153,7 @@ const UploadOrder = () => {
         <div className="col-md-4 pt-5 bg-light">
           <h5>
             Available Wallet Balance:{" "}
-            <span>
-              {loggedInUser.amount == 0 ? 0 : loggedInUser.amount} TK
-            </span>
+            <span>{loggedInUser.amount == 0 ? 0 : loggedInUser.amount} TK</span>
           </h5>
         </div>
       </div>

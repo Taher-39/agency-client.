@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Feedback = () => {
   const [userFeedback, setUserFeedback] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:4000/api/v1/getReview")
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/getReview")
       .then((res) => res.json())
       .then((data) => setUserFeedback(data));
   }, []);
@@ -35,7 +35,7 @@ const Feedback = () => {
                 <div>
                   <span>
                     <i
-                      style={{color}}
+                      style={{ color }}
                       className={
                         review.rating >= 1
                           ? "fas fa-star orange-rating"
@@ -45,7 +45,7 @@ const Feedback = () => {
                   </span>
                   <span>
                     <i
-                      style={{color}}
+                      style={{ color }}
                       className={
                         review.rating >= 2
                           ? "fas fa-star orange-rating"
@@ -55,7 +55,7 @@ const Feedback = () => {
                   </span>
                   <span>
                     <i
-                      style={{color}}
+                      style={{ color }}
                       className={
                         review.rating >= 3
                           ? "fas fa-star orange-rating"
@@ -65,7 +65,7 @@ const Feedback = () => {
                   </span>
                   <span>
                     <i
-                      style={{color}}
+                      style={{ color }}
                       className={
                         review.rating >= 4
                           ? "fas fa-star orange-rating"
@@ -75,7 +75,7 @@ const Feedback = () => {
                   </span>
                   <span>
                     <i
-                      style={{color}}
+                      style={{ color }}
                       className={
                         review.rating >= 5
                           ? "fas fa-star orange-rating"

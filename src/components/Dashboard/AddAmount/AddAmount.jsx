@@ -18,7 +18,7 @@ const AddAmount = () => {
       token: Number(token),
       email: loggedInUser.email,
     };
-    fetch("http://localhost:4000/api/v1/addMoney", {
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/addMoney", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -83,8 +83,7 @@ const AddAmount = () => {
         </div>
         <div className="col-md-4 pt-5 bg-light">
           <h5 className="user">
-            Available Wallet Balance:{" "}
-            <span>{loggedInUser.amount} TK</span>
+            Available Wallet Balance: <span>{loggedInUser.amount} TK</span>
           </h5>
         </div>
       </div>

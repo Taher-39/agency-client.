@@ -33,7 +33,7 @@ const Review = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/v1/isClient", {
+    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/isClient", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,21 +60,21 @@ const Review = () => {
 
   const handleSubmit = (e) => {
     if (isClient) {
-    const reviewWithRating = {
-      ...review,
-      rating: currentValue,
-    };
-    fetch("http://localhost:4000/api/v1/postReview", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reviewWithRating),
-    }).then((res) => {
-      if (res) {
-        alert("Review added successfully");
-      }
-    });
+      const reviewWithRating = {
+        ...review,
+        rating: currentValue,
+      };
+      fetch("https://protected-plateau-36631.herokuapp.com/api/v1/postReview", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reviewWithRating),
+      }).then((res) => {
+        if (res) {
+          alert("Review added successfully");
+        }
+      });
     } else {
       alert("Your Are Not A Client, Please Order a service");
     }
