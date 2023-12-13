@@ -12,7 +12,7 @@ const AddAdmin = () => {
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await fetch("http://localhost:8080/users/all-users");
+        const response = await fetch("https://agency-server-git-main-taher-39.vercel.app/users/all-users");
         if (response.ok) {
           const data = await response.json();
           setUsers(data);
@@ -30,7 +30,7 @@ const AddAdmin = () => {
   const handleAdminStatusUpdate = async (userId, isAdminStatus) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/users/update-user-role/${userId}`,
+        `https://agency-server-git-main-taher-39.vercel.app/users/update-user-role/${userId}`,
         {
           method: "PATCH",
           headers: {

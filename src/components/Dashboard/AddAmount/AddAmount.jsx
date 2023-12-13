@@ -81,7 +81,7 @@ const AddAmount = () => {
       country: selectedCountry.label,
       currency: selectedCurrency,
     };
-    fetch("http://localhost:8080/payment/addMoney", {
+    fetch("https://agency-server-git-main-taher-39.vercel.app/payment/addMoney", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

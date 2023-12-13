@@ -100,7 +100,6 @@ const UploadOrder = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const newOrderForm = new FormData();
     newOrderForm.append("name", loggedInUser.name);
     newOrderForm.append("email", loggedInUser.email);
@@ -111,10 +110,12 @@ const UploadOrder = () => {
     newOrderForm.append("option", option);
     newOrderForm.append("price", price);
 
+    console.log(newOrderForm);
+
     if (loggedInUser.amount >= price) {
       try {
         const orderResponse = await fetch(
-          "http://localhost:8080/order/uploadOrder",
+          "https://agency-server-git-main-taher-39.vercel.app/order/upload-order",
           {
             method: "POST",
             body: newOrderForm,
@@ -126,7 +127,7 @@ const UploadOrder = () => {
         if (orderData) {
           toast.success("Order Submitted, Check Service List");
           const updateAmountResponse = await fetch(
-            `http://localhost:8080/auth/users/${userId}/update-amount`,
+            `https://agency-server-git-main-taher-39.vercel.app/auth/users/${userId}/update-amount`,
             {
               method: "PUT",
               headers: {
@@ -149,7 +150,7 @@ const UploadOrder = () => {
           }
         }
       } catch (error) {
-        toast.error("An error occurred");
+        toast.error(error.message);
       }
     } else {
       toast.error(
@@ -157,6 +158,7 @@ const UploadOrder = () => {
       );
     }
   };
+
   return (
     <div>
       <div style={{ backgroundColor: "#FBD062" }} className="dashboard-top">

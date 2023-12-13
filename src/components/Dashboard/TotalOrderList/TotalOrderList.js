@@ -9,7 +9,7 @@ const TotalOrderList = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [totalOrders, setTotalOrders] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/order/getTotalOrders")
+    fetch("https://agency-server-git-main-taher-39.vercel.app/order/get-total-orders")
       .then((res) => res.json())
       .then((data) => {
         setTotalOrders(data);

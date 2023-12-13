@@ -21,7 +21,7 @@ const RegisterScreen = () => {
         email,
         password,
       };
-      fetch("http://localhost:8080/auth/register", {
+      fetch("https://agency-server-git-main-taher-39.vercel.app/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

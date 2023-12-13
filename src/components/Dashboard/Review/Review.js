@@ -52,7 +52,7 @@ const Review = () => {
       email: loggedInUser.email,
     };
 
-    fetch(`http://localhost:8080/feedback/post-feedback/${id}`, {
+    fetch(`https://agency-server-git-main-taher-39.vercel.app/feedback/post-feedback/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

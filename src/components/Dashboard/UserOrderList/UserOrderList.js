@@ -10,7 +10,7 @@ const UserOrderList = () => {
   const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/order/getUserOrders?email=" + loggedInUser.email)
+    fetch("https://agency-server-git-main-taher-39.vercel.app/order/get-user-orders?email=" + loggedInUser.email)
       .then((res) => res.json())
       .then((data) => setUserOrders(data));
   }, [loggedInUser.email]);

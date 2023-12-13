@@ -4,7 +4,7 @@ const Feedback = () => {
   const [userFeedback, setUserFeedback] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/feedback/getFeedback")
+    fetch("https://agency-server-git-main-taher-39.vercel.app/feedback/getFeedback")
       .then((res) => res.json())
       .then((data) => setUserFeedback(data.feedbackData));
   }, []);

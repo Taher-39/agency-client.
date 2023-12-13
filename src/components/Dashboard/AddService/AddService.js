@@ -27,7 +27,7 @@ const AddService = () => {
     serviceFormData.append("file", file);
     serviceFormData.append("description", description);
 
-    fetch("http://localhost:8080/services/addService", {
+    fetch("https://agency-server-git-main-taher-39.vercel.app/services/addService", {
       method: "POST",
       body: serviceFormData,
     })

@@ -13,7 +13,7 @@ const TotalOrderListTable = ({ totalOrders }) => {
 
     setOrders(updatedOrders);
 
-    fetch(`http://localhost:8080/order/updateStatus/${id}`, {
+    fetch(`https://agency-server-git-main-taher-39.vercel.app/order/update-status/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -17,7 +17,7 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/email/send-email", {
+      const response = await fetch("https://agency-server-git-main-taher-39.vercel.app/email/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

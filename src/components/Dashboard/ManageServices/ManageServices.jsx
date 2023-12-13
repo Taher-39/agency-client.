@@ -11,7 +11,7 @@ const ManageServices = () => {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/services/getAllServices")
+    fetch("https://agency-server-git-main-taher-39.vercel.app/services/getAllServices")
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
@@ -20,7 +20,7 @@ const ManageServices = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure for delete..?")) {
-      fetch(`http://localhost:8080/services/deleteService/${id}`, {
+      fetch(`https://agency-server-git-main-taher-39.vercel.app/services/deleteService/${id}`, {
         method: "DELETE",
       }).then((result) => {
         if (result) {
