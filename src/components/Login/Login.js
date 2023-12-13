@@ -1,41 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "./firebase.config";
 import { UserContext } from "../../App";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import navLogo from "../../images/logos/logo.png";
-import Message from "../Message/Message";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
   }
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
-  const handleSignIn = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        var user = result.user;
-        var newUser = { name: user.displayName, email: user.email };
-        setLoggedInUser(newUser);
-        history.replace(from);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
+  // const handleSignIn = () => {
+  //   const provider = new firebase.auth.GoogleAuthProvider();
+  //   firebase
+  //     .auth()
+  //     .signInWithPopup(provider)
+  //     .then((result) => {
+  //       var user = result.user;
+  //       var newUser = { name: user.displayName, email: user.email };
+  //       setLoggedInUser(newUser);
+  //       history.replace(from);
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message);
+  //     });
+  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -45,7 +44,7 @@ const Login = () => {
       password: password,
     };
 
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/authUser", {
+    fetch("http://localhost:8080/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,85 +53,89 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
-          setLoggedInUser(data);
+        if (data.user) {
+          setLoggedInUser(data.user);
+          sessionStorage.setItem("loggedInUser", JSON.stringify(data.user));
           history.replace(from);
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
         }
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser({});
+    sessionStorage.removeItem("loggedInUser");
   };
 
   return (
     <div
-      className="text-center pt-5"
-      style={{ minHeight: "100vh", backgroundColor: "whitesmoke" }}
+      className="container-fluid py-5 "
+      style={{ backgroundColor: "whitesmoke", minHeight: "100vh" }}
     >
-      <div>
-        <div className="text-center  py-4">
-          <img src={navLogo} alt="" style={{ width: "150px" }} />
-        </div>
-        <div>
+      <div className="text-center">
+        <img src={navLogo} alt="Logo" style={{ maxWidth: "150px" }} />
+      </div>
+      <div className="row justify-content-center mt-5">
+        <div className="col-md-6">
           {loggedInUser.email ? (
             <div className="text-center">
-              <button
-                onClick={() => setLoggedInUser({})}
-                className="btn btn-danger my-2 w-50"
-              >
+              <button onClick={handleLogout} className="btn btn-danger my-2">
                 Sign-Out
               </button>
-              <br />
-              <button className="btn ">
-                <Link to="/">Home</Link>
-              </button>
-              <br />
+              <Link to="/" className="btn btn-primary my-2 mx-2">
+                Home
+              </Link>
             </div>
           ) : (
-            <div className="rounded py-5 my-0 mx-auto w-50 shadow">
-              <h2 style={{ color: "#000" }}>Sign In</h2>
-              {error && <Message variant="danger">{error}</Message>}
-
+            <div className="rounded p-4 shadow">
+              <h2 className="text-center" style={{ color: "#000" }}>
+                Sign In
+              </h2>
               <form onSubmit={submitHandler}>
-                <div controlId="email">
+                <div className="form-group">
                   <input
-                    className="form-control w-75 ms-5"
+                    className="form-control mb-3"
                     type="email"
                     placeholder="Enter email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                  ></input>
+                  />
                 </div>
-
-                <div controlId="password">
-                  <br />
+                <div className="form-group">
                   <input
-                    className="form-control w-75 ms-5"
+                    className="form-control"
                     type="password"
                     placeholder="Enter password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                  ></input>
+                  />
                 </div>
-
-                <button type="submit" className="btn btn-primary mt-2">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block mt-3"
+                >
                   Sign In
                 </button>
               </form>
-
               <div className="row py-3">
-                <div>
+                <div className="col">
                   New Customer? <Link to="/register">Register</Link>
                 </div>
               </div>
-
-              <button onClick={handleSignIn} className="btn btn-danger my-2">
+              {/* <button
+                onClick={handleSignIn}
+                className="btn btn-danger btn-block my-3"
+              >
                 Google SignIn
-              </button>
-              <br />
-              <button className="btn btn-outline-success my-1 px-4 text-light">
-                <Link className=" text-decoration-none" to="/">
-                  Home
-                </Link>
-              </button>
+              </button> */}
+              <Link to="/" className="btn btn-outline-success btn-block mx-3">
+                Home
+              </Link>
             </div>
           )}
         </div>

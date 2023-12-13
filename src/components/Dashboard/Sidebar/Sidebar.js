@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../App";
 import {
@@ -7,30 +7,19 @@ import {
   MdDescription,
   MdOutlineAdminPanelSettings,
   MdOutlineDesignServices,
+  MdOutlineDashboard,
 } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 import { FcMoneyTransfer } from "react-icons/fc";
 import "./Sidebar.css";
 
 const Sidebar = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [isAdmin, setIsAdmin] = useState(loggedInUser.isAdmin);
 
   useEffect(() => {
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/isAdmin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: loggedInUser.email }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsAdmin(data);
-        setLoading(false);
-      });
-  }, []);
+    setIsAdmin(loggedInUser.isAdmin);
+  }, [loggedInUser.isAdmin]);
 
   return (
     <div className="py-5">
@@ -41,58 +30,57 @@ const Sidebar = () => {
               <MdHome /> Home
             </Link>
           </li>
-          {loading ? (
-            <p className="text-light">loading...</p>
+          {isAdmin ? (
+            <>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/dashboard">
+                  <MdOutlineDashboard /> Dashboard
+                </Link>
+              </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/totalOrderList">
+                  <MdDescription /> Order Lists
+                </Link>
+              </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/addService">
+                  <FaPlus /> Add Service
+                </Link>
+              </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/addAdmin">
+                  <MdOutlineAdminPanelSettings /> Manage Admin
+                </Link>
+              </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/manage-services">
+                  <MdOutlineDesignServices /> Manage Services{" "}
+                </Link>
+              </li>
+            </>
           ) : (
-            <div>
-              {isAdmin ? (
-                <div>
-                  <li className="sidebar-links pb-2">
-                    <Link className="sidebar-link" to="/totalOrderList">
-                      <MdDescription /> Order Lists
-                    </Link>
-                  </li>
-                  <li className="sidebar-links pb-2">
-                    <Link className="sidebar-link" to="/addService">
-                      <FaPlus /> AddService
-                    </Link>
-                  </li>
-                  <li className="sidebar-links pb-2">
-                    <Link className="sidebar-link" to="/addAdmin">
-                      <MdOutlineAdminPanelSettings /> Add-Admin
-                    </Link>
-                  </li>
-                  <li className="sidebar-links pb-2">
-                    <Link className="sidebar-link" to="/manage-services">
-                      <MdOutlineDesignServices /> Manage Services{" "}
-                    </Link>
-                  </li>
-                  <li className="sidebar-links pb-2">
-                    <Link className="sidebar-link" to="/add-token">
-                      <MdDescription /> Add Token{" "}
-                    </Link>
-                  </li>
-                </div>
-              ) : (
-                <div>
-                  <li className="sidebar-links pb-2">
-                    <Link className="sidebar-link" to="/userOrders">
-                      <MdDescription /> Service List
-                    </Link>
-                  </li>
-                  <li className="sidebar-links pb-2">
-                    <Link className="sidebar-link" to="/getUserReview">
-                      <MdCommentBank /> Review
-                    </Link>
-                  </li>
-                  <li className="sidebar-links">
-                    <Link className="sidebar-link" to="/addAmount">
-                      <FcMoneyTransfer /> Add Money
-                    </Link>
-                  </li>
-                </div>
-              )}
-            </div>
+            <>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/dashboard">
+                  <MdOutlineDashboard /> Dashboard
+                </Link>
+              </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/userOrders">
+                  <MdDescription /> Order List
+                </Link>
+              </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/getUserReview">
+                  <MdCommentBank /> Review
+                </Link>
+              </li>
+              <li className="sidebar-links">
+                <Link className="sidebar-link" to="/addAmount">
+                  <FcMoneyTransfer /> Add Money
+                </Link>
+              </li>
+            </>
           )}
         </ul>
       </nav>

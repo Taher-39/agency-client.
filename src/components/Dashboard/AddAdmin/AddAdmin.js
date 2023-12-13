@@ -1,33 +1,60 @@
-import React, { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../images/logos/logo.png";
 import { UserContext } from "../../../App";
+import { toast } from "react-toastify";
 
 const AddAdmin = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  const [admin, setAdmin] = useState({});
+  const [users, setUsers] = useState([]);
 
-  const handleBlur = (e) => {
-    const adminEmail = { issueDate: new Date() };
-    adminEmail[e.target.name] = e.target.value;
-    setAdmin(adminEmail);
-  };
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const response = await fetch("http://localhost:8080/users/all-users");
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+        } else {
+          throw new Error("Error fetching users");
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    }
 
-  const handleSubmit = (e) => {
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/addAdmin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(admin),
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        alert("New Admin Added");
+    fetchUsers();
+  }, []);
+
+  const handleAdminStatusUpdate = async (userId, isAdminStatus) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/users/update-user-role/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ isAdmin: isAdminStatus }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error updating isAdmin status");
+      }
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user._id === userId ? { ...user, isAdmin: isAdminStatus } : user
+        )
+      );
+
+      toast.success("isAdmin status updated successfully!", {
+        position: toast.POSITION.TOP_CENTER,
       });
-
-    e.preventDefault();
+    } catch (error) {
+      console.error("Error updating isAdmin status:", error);
+    }
   };
   return (
     <div>
@@ -51,20 +78,48 @@ const AddAdmin = () => {
           <Sidebar></Sidebar>
         </div>
         <div className="right-side col-md-10 bg-light rounded p-5">
-          <form onSubmit={handleSubmit}>
-            <input
-              className="form-control w-50 mb-3"
-              onBlur={handleBlur}
-              type="email"
-              name="email"
-              placeholder="jon@email.com"
-              required
-            />
-            '
-            <button className="btn btn-bg text-light" type="submit">
-              Submit
-            </button>
-          </form>
+          <div>
+            <h2>User List</h2>
+
+            <div className="bg-light rounded container p-4 shadow">
+              <table className="table table-borderless">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email Id</th>
+                    <th>Role</th>
+                    <th>Manage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user._id} className="m-3 p-3">
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td
+                        className={
+                          user.isAdmin ? "text-success" : "text-danger"
+                        }
+                      >
+                        {" "}
+                        {user.isAdmin ? "Admin" : "Not Admin"}
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-bg text-light"
+                          onClick={() =>
+                            handleAdminStatusUpdate(user._id, !user.isAdmin)
+                          }
+                        >
+                          Toggle Admin
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

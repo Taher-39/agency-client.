@@ -10,13 +10,10 @@ const UserOrderList = () => {
   const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
-    fetch(
-      "https://protected-plateau-36631.herokuapp.com/api/v1/getUserOrders?email=" +
-        loggedInUser.email
-    )
+    fetch("http://localhost:8080/order/getUserOrders?email=" + loggedInUser.email)
       .then((res) => res.json())
       .then((data) => setUserOrders(data));
-  }, []);
+  }, [loggedInUser.email]);
 
   return (
     <div>

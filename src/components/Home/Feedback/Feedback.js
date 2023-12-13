@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Feedback = () => {
   const [userFeedback, setUserFeedback] = useState([]);
+
   useEffect(() => {
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/getReview")
+    fetch("http://localhost:8080/feedback/getFeedback")
       .then((res) => res.json())
-      .then((data) => setUserFeedback(data));
+      .then((data) => setUserFeedback(data.feedbackData));
   }, []);
+
   const color = {
     orange: "#FFBA5A",
     grey: "#a9a9a9",
@@ -19,9 +21,9 @@ const Feedback = () => {
           <span className="text-sp">Feedback</span>
         </h1>
         <div className="row">
-          {userFeedback.map((review) => (
+          {userFeedback.map((review, index) => (
             <div
-              key={review._id}
+              key={index} // Using index as key as feedback doesn't have an _id
               className="col-md-4 d-flex align-items-stretch my-4"
             >
               <div
@@ -29,10 +31,9 @@ const Feedback = () => {
                 style={{ minWidth: "300px" }}
               >
                 <h3 className="text-center">{review.name}</h3>
-                <h5 className="text-center">{review.designation}</h5>
-                <p>{review.description}</p>
-
-                <div>
+                <h5 className="text-center">{review.company}</h5>
+                <p className="text-center">{review.comment}</p>
+                <div className="text-center">
                   <span>
                     <i
                       style={{ color }}

@@ -9,7 +9,7 @@ const TotalOrderList = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [totalOrders, setTotalOrders] = useState([]);
   useEffect(() => {
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/getTotalOrders")
+    fetch("http://localhost:8080/order/getTotalOrders")
       .then((res) => res.json())
       .then((data) => {
         setTotalOrders(data);

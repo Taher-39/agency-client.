@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../../App";
 import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../images/logos/logo.png";
 import { FaStar } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const colors = {
   orange: "#FFBA5A",
@@ -12,8 +13,9 @@ const colors = {
 
 const Review = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  const [review, setReview] = useState({});
-  const [isClient, setIsClient] = useState(false);
+  const [feedback, setFeedback] = useState({});
+  const id = loggedInUser._id;
+  const history = useHistory();
 
   //For rating
   const [currentValue, setCurrentValue] = useState(0);
@@ -32,54 +34,46 @@ const Review = () => {
     setHoverValue(undefined);
   };
 
-  useEffect(() => {
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/isClient", {
+  const handleBlur = (e) => {
+    const newFeedback = {
+      ...feedback,
+      name: loggedInUser.name,
+      email: loggedInUser.email,
+    };
+    newFeedback[e.target.name] = e.target.value;
+    setFeedback(newFeedback);
+  };
+
+  const handleFeedbackSubmit = (e) => {
+    e.preventDefault();
+    const finalFeedback = {
+      ...feedback,
+      rating: currentValue,
+      email: loggedInUser.email,
+    };
+
+    fetch(`http://localhost:8080/feedback/post-feedback/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: loggedInUser.email }),
+      body: JSON.stringify(finalFeedback),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error("Failed! Order first then post feedback.");
+      })
       .then((data) => {
-        if (data) {
-          setIsClient(data);
-        }
+        toast.success("Review added successfully");
+        history.push("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
       });
-  }, []);
-
-  const handleBlur = (e) => {
-    const newReview = {
-      ...review,
-      name: loggedInUser.name,
-      email: loggedInUser.email,
-    };
-    newReview[e.target.name] = e.target.value;
-    setReview(newReview);
   };
 
-  const handleSubmit = (e) => {
-    if (isClient) {
-      const reviewWithRating = {
-        ...review,
-        rating: currentValue,
-      };
-      fetch("https://protected-plateau-36631.herokuapp.com/api/v1/postReview", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reviewWithRating),
-      }).then((res) => {
-        if (res) {
-          alert("Review added successfully");
-        }
-      });
-    } else {
-      alert("Your Are Not A Client, Please Order a service");
-    }
-    e.preventDefault();
-  };
   return (
     <div>
       <div style={{ backgroundColor: "#FBD062" }} className="dashboard-top">
@@ -102,20 +96,21 @@ const Review = () => {
           <Sidebar></Sidebar>
         </div>
         <div className="right-side col-md-10 bg-light p-5">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleFeedbackSubmit}>
             <input
               className="form-control w-50 mb-3"
               type="text"
               name="name"
               placeholder="Your Name"
               defaultValue={loggedInUser.name}
+              disabled
             />
 
             <input
               className="form-control w-50 mb-3"
               onBlur={handleBlur}
               type="text"
-              name="designation"
+              name="company"
               placeholder="Company's name / Designation"
               required
             />
@@ -125,7 +120,7 @@ const Review = () => {
               onBlur={handleBlur}
               cols="30"
               rows="10"
-              name="description"
+              name="comment"
               required
             ></textarea>
 

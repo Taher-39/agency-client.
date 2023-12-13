@@ -1,14 +1,16 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../images/logos/logo.png";
 import { UserContext } from "../../../App";
+import { toast } from "react-toastify";
 
 const AddService = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [serviceName, setServiceName] = useState();
   const [description, setDescription] = useState();
   const [file, setFile] = useState();
+  const history = useHistory();
 
   const handleServiceName = (e) => {
     setServiceName(e.target.value);
@@ -25,17 +27,21 @@ const AddService = () => {
     serviceFormData.append("file", file);
     serviceFormData.append("description", description);
 
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/addService", {
+    fetch("http://localhost:8080/services/addService", {
       method: "POST",
       body: serviceFormData,
     })
       .then((res) => res.json())
       .then((data) => {
         if (data) {
-          alert("Services Added Successfully.");
+          toast.success("Services Added Successfully.");
+          setDescription("");
+          setFile("");
+          setServiceName("");
+          history.push("/");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
 
     e.preventDefault();
   };

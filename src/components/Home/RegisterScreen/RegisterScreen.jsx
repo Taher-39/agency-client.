@@ -1,16 +1,14 @@
 import { useContext, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import Message from "../../Message/Message";
 import navLogo from "../../../images/logos/logo.png";
 import { UserContext } from "../../../App";
+import { toast } from "react-toastify";
 
 const RegisterScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
 
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const history = useHistory();
@@ -20,24 +18,20 @@ const RegisterScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+      toast.error("Passwords do not match");
     } else {
       const registerData = {
-        name: name,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
+        name,
+        email,
+        password,
       };
-      fetch(
-        "https://protected-plateau-36631.herokuapp.com/api/v1/resisterUser",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(registerData),
-        }
-      )
+      fetch("http://localhost:8080/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registerData),
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data) {
@@ -45,7 +39,7 @@ const RegisterScreen = () => {
             history.replace(from);
           }
         })
-        .catch((err) => setError(err.message, err));
+        .catch((err) => toast.error(err.message));
     }
   };
 
@@ -56,9 +50,6 @@ const RegisterScreen = () => {
       </div>
       <div className=" rounded py-5 my-0 mx-auto w-50 shadow">
         <h1 className="ms-5">Sign Up</h1>
-
-        {message && <Message variant="danger">{message}</Message>}
-        {error && <Message variant="danger">{error}</Message>}
 
         <form onSubmit={submitHandler} className="ms-5">
           <div className="mb-2" controlId="name">
@@ -73,7 +64,7 @@ const RegisterScreen = () => {
           </div>
 
           <div className="mb-2" controlId="email">
-            <label for="floatingTextarea">Email Address</label>
+            <label for="floatingTextarea">Email</label>
             <input
               className="form-control w-75"
               type="email"
@@ -111,9 +102,9 @@ const RegisterScreen = () => {
         </form>
 
         <div className="row py-3 ms-5">
-          <div>
+          <span>
             Have an Account? <Link to="/signUp">Login</Link>
-          </div>
+          </span>
         </div>
       </div>
     </div>

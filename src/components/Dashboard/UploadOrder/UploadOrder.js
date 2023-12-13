@@ -1,80 +1,161 @@
-import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../../App";
 import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../images/logos/logo.png";
+import { toast } from "react-toastify";
 
 const UploadOrder = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  const [orderDetails, setOrderDetails] = useState({});
+  const [description, setDescription] = useState("");
   const [orderFile, setOrderFile] = useState();
+  const [service, setService] = useState("");
+  const [option, setOption] = useState("");
+  const [price, setPrice] = useState(0);
+  const history = useHistory();
 
-  const { id } = useParams();
+  const handleServiceChange = (event) => {
+    setService(event.target.value);
+    setOption("");
+    setPrice(0);
+  };
 
-  // fetch total order
-  const [service, setService] = useState([]);
-  useEffect(() => {
-    fetch(
-      `https://protected-plateau-36631.herokuapp.com/api/v1/get-single-service/${id}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setService(data);
-      });
-  }, []);
+  const handleOptionChange = (event) => {
+    setOption(event.target.value);
+    let selectedPrice = 0;
+    if (service === "webDev") {
+      switch (event.target.value) {
+        case "singlePage":
+          selectedPrice = 2000;
+          break;
+        case "threePages":
+          selectedPrice = 3000;
+          break;
+        case "fivePages":
+          selectedPrice = 5000;
+          break;
+        case "tenPages":
+          selectedPrice = 10000;
+          break;
+        default:
+          selectedPrice = 0;
+      }
+    } else if (service === "graphicsDesign") {
+      switch (event.target.value) {
+        case "singleDesign":
+          selectedPrice = 1500;
+          break;
+        case "doubleDesign":
+          selectedPrice = 2500;
+          break;
+        case "fiveDesign":
+          selectedPrice = 7000;
+          break;
+        default:
+          selectedPrice = 0;
+      }
+    } else if (service === "figmaToReact") {
+      switch (event.target.value) {
+        case "singlePage":
+          selectedPrice = 1300;
+          break;
+        case "threePages":
+          selectedPrice = 2500;
+          break;
+        case "fivePages":
+          selectedPrice = 4500;
+          break;
+        case "tenPages":
+          selectedPrice = 8000;
+          break;
+        default:
+          selectedPrice = 0;
+      }
+    } else if (service === "videoEditing") {
+      switch (event.target.value) {
+        case "shortVideo(<15min)":
+          selectedPrice = 5000;
+          break;
+        case "mediumVideo(<60min)":
+          selectedPrice = 15000;
+          break;
+        case "longVideo(<120min)":
+          selectedPrice = 25000;
+          break;
+        default:
+          selectedPrice = 0;
+      }
+    }
+    setPrice(selectedPrice);
+  };
 
-  const title = service[0]?.title;
+  const userId = loggedInUser._id;
 
-  let costPrice;
-  if (title == "Web Development") {
-    costPrice = 5000;
-  } else if (title == "Graphics-Design") {
-    costPrice = 2000;
-  } else if (title == "HTML to React") {
-    costPrice = 3000;
-  }
-
-  const handleBlur = (e) => {
-    const newOrderDetails = { ...orderDetails, status: "pending" };
-    newOrderDetails[e.target.name] = e.target.value;
-    setOrderDetails(newOrderDetails);
+  const handleDescription = (e) => {
+    setDescription(e.target.value);
   };
   const handleFile = (e) => {
     setOrderFile(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const newOrderForm = new FormData();
     newOrderForm.append("name", loggedInUser.name);
     newOrderForm.append("email", loggedInUser.email);
-    newOrderForm.append("category", title);
-    newOrderForm.append("description", orderDetails.projectDetails);
-    newOrderForm.append("price", costPrice);
-    newOrderForm.append("status", orderDetails.status);
+    newOrderForm.append("description", description);
+    newOrderForm.append("status", "pending");
     newOrderForm.append("file", orderFile);
+    newOrderForm.append("service", service);
+    newOrderForm.append("option", option);
+    newOrderForm.append("price", price);
 
-    if (loggedInUser.amount >= costPrice) {
-      const currentWalletcostPrice =
-        Number(loggedInUser.amount) - Number(costPrice);
-      newOrderForm.append("newAmount", currentWalletcostPrice);
-
-      fetch(
-        "https://protected-plateau-36631.herokuapp.com/api/v1/uploadOrder",
-        {
-          method: "POST",
-          body: newOrderForm,
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data) {
-            alert("Order Submitted, Check Service List");
+    if (loggedInUser.amount >= price) {
+      try {
+        const orderResponse = await fetch(
+          "http://localhost:8080/order/uploadOrder",
+          {
+            method: "POST",
+            body: newOrderForm,
           }
-        });
+        );
+
+        const orderData = await orderResponse.json();
+
+        if (orderData) {
+          toast.success("Order Submitted, Check Service List");
+          history.push("http://localhost:3000/userOrders");
+          const updateAmountResponse = await fetch(
+            `http://localhost:8080/auth/users/${userId}/update-amount`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ price }),
+            }
+          );
+
+          if (updateAmountResponse.ok) {
+            const updateAmountData = await updateAmountResponse.json();
+            setLoggedInUser((prevUser) => ({
+              ...prevUser,
+              amount: updateAmountData.user.amount,
+            }));
+          } else {
+            const errorData = await updateAmountResponse.json();
+            throw new Error(errorData.message);
+          }
+        }
+      } catch (error) {
+        toast.error("An error occurred");
+      }
     } else {
-      alert("Your Wallet Price Is Insuficient");
+      toast.error(
+        "Your Wallet Price Is Insufficient. Pay From AddMoney Option"
+      );
     }
-    e.preventDefault();
   };
   return (
     <div>
@@ -105,6 +186,7 @@ const UploadOrder = () => {
               name="name"
               placeholder="Your name / company's name"
               defaultValue={loggedInUser.name}
+              disabled
             />
             <input
               className="form-control w-75 mb-3"
@@ -112,32 +194,88 @@ const UploadOrder = () => {
               name="email"
               placeholder="Your email address"
               defaultValue={loggedInUser.email}
+              disabled
             />
-            <input
-              className="form-control w-75 mb-3"
-              type="text"
-              name="category"
-              placeholder="Graphics Design"
-              defaultValue={title}
-              required
-            />
+            <h2>Select a Service:</h2>
+            <select
+              className="form-select w-75 mb-3"
+              onChange={handleServiceChange}
+            >
+              <option value="">Select a Service</option>
+              <option value="webDev">Web Development</option>
+              <option value="graphicsDesign">Graphics Design</option>
+              <option value="figmaToReact">Figma to React</option>
+              <option value="videoEditing">Video Editing</option>
+            </select>
+
+            {service && (
+              <div className="my-4">
+                <h3>Select an Option:</h3>
+                <select
+                  className="form-select w-75"
+                  onChange={handleOptionChange}
+                >
+                  <option value="">Select an Option</option>
+                  {service === "webDev" && (
+                    <>
+                      <option value="singlePage">Single Page - 2000 tk</option>
+                      <option value="threePages">Three Pages - 3000 tk</option>
+                      <option value="fivePages">Five Pages - 5000 tk</option>
+                      <option value="tenPages">Ten Pages - 10000 tk</option>
+                    </>
+                  )}
+                  {service === "graphicsDesign" && (
+                    <>
+                      <option value="singleDesign">
+                        Single Design - Price 1500 tk
+                      </option>
+                      <option value="doubleDesign">
+                        Double Design - Price 2500 tk
+                      </option>
+                      <option value="fiveDesign">
+                        Five Design - Price 7000 tk
+                      </option>
+                    </>
+                  )}
+                  {service === "figmaToReact" && (
+                    <>
+                      <option value="singlePage">Single Page - 1300 tk</option>
+                      <option value="threePages">Three Pages - 2500 tk</option>
+                      <option value="fivePages">Five Pages - 4500 tk</option>
+                      <option value="tenPages">Ten Pages - 8000 tk</option>
+                    </>
+                  )}
+                  {service === "videoEditing" && (
+                    <>
+                      <option value="shortVideo(<15min)">
+                        Short Video - Price 5000 tk
+                      </option>
+                      <option value="mediumVideo(<60min)">
+                        Medium Video - Price 15000 tk
+                      </option>
+                      <option value="longVideo(<120min)">
+                        Long Video - Price 25000 tk
+                      </option>
+                    </>
+                  )}
+                </select>
+              </div>
+            )}
+
+            {price > 0 && (
+              <div className="my-4">
+                <h4>Selected Price: {price} tk</h4>
+              </div>
+            )}
             <textarea
               className="form-control w-75 mb-3"
-              onBlur={handleBlur}
-              name="projectDetails"
-              placeholder="project Details"
+              onChange={handleDescription}
+              name="description"
+              placeholder="Service Details"
               cols="30"
               rows="5"
               required
             ></textarea>
-            <input
-              className="form-control w-75 mb-3"
-              type="text"
-              name="cost-price"
-              placeholder="cost-price"
-              defaultValue={costPrice}
-              required
-            />
             <input
               className="form-control w-75 mb-3"
               onChange={handleFile}
@@ -153,7 +291,9 @@ const UploadOrder = () => {
         <div className="col-md-4 pt-5 bg-light">
           <h5>
             Available Wallet Balance:{" "}
-            <span>{loggedInUser.amount == 0 ? 0 : loggedInUser.amount} TK</span>
+            <span>
+              {loggedInUser.amount === 0 ? 0 : loggedInUser.amount} TK
+            </span>
           </h5>
         </div>
       </div>

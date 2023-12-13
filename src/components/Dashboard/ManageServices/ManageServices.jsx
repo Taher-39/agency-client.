@@ -4,16 +4,14 @@ import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../images/logos/logo.png";
 import { Link } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
-// import { MdOutlineDesignServices } from "react-icons/md";
-// import EditServiceModal from "./EditServiceModal";
+import { toast } from "react-toastify";
 
 const ManageServices = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [services, setServices] = useState([]);
-  // const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("https://protected-plateau-36631.herokuapp.com/api/v1/getService")
+    fetch("http://localhost:8080/services/getAllServices")
       .then((res) => res.json())
       .then((data) => {
         setServices(data);
@@ -22,30 +20,17 @@ const ManageServices = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure for delete..?")) {
-      fetch(
-        `https://protected-plateau-36631.herokuapp.com/api/v1/manage/${id}`,
-        {
-          method: "DELETE",
-        }
-      ).then((result) => {
+      fetch(`http://localhost:8080/services/deleteService/${id}`, {
+        method: "DELETE",
+      }).then((result) => {
         if (result) {
-          alert(`Service deleted when id: ${id}`);
+          toast.success(result.message);
+        } else {
+          toast.error(result.statusText);
         }
       });
     }
   };
-
-  // const updateHandler = (id) => {
-  //   alert(id);
-  // };
-
-  // function closeModal() {
-  //   setIsOpen(false);
-  // }
-
-  // function openModal() {
-  //   setIsOpen(true);
-  // }
 
   return (
     <div>
@@ -98,18 +83,6 @@ const ManageServices = () => {
                       >
                         <RiDeleteBin5Line />
                       </button>
-
-                      {/* <button
-                        className="cursor-pointer btn text-success"
-                        onClick={openModal}
-                      >
-                        <MdOutlineDesignServices />
-                      </button>
-                      <EditServiceModal
-                        modalIsOpen={modalIsOpen}
-                        closeModal={closeModal}
-                        item={item}
-                      /> */}
                     </td>
                   </tr>
                 ))}
