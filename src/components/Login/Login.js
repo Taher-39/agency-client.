@@ -20,21 +20,21 @@ const Login = () => {
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
 
-  // const handleSignIn = () => {
-  //   const provider = new firebase.auth.GoogleAuthProvider();
-  //   firebase
-  //     .auth()
-  //     .signInWithPopup(provider)
-  //     .then((result) => {
-  //       var user = result.user;
-  //       var newUser = { name: user.displayName, email: user.email };
-  //       setLoggedInUser(newUser);
-  //       history.replace(from);
-  //     })
-  //     .catch((error) => {
-  //       toast.error(error.message);
-  //     });
-  // };
+  const handleSignIn = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        var user = result.user;
+        var newUser = { name: user.displayName, email: user.email };
+        setLoggedInUser(newUser);
+        history.replace(from);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -127,12 +127,12 @@ const Login = () => {
                   New Customer? <Link to="/register">Register</Link>
                 </div>
               </div>
-              {/* <button
+              <button
                 onClick={handleSignIn}
                 className="btn btn-danger btn-block my-3"
               >
                 Google SignIn
-              </button> */}
+              </button>
               <Link to="/" className="btn btn-outline-success btn-block mx-3">
                 Home
               </Link>

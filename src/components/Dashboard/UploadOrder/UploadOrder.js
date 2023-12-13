@@ -125,7 +125,6 @@ const UploadOrder = () => {
 
         if (orderData) {
           toast.success("Order Submitted, Check Service List");
-          history.push("http://localhost:3000/userOrders");
           const updateAmountResponse = await fetch(
             `http://localhost:8080/auth/users/${userId}/update-amount`,
             {
@@ -143,6 +142,7 @@ const UploadOrder = () => {
               ...prevUser,
               amount: updateAmountData.user.amount,
             }));
+            history.push("/userOrders");
           } else {
             const errorData = await updateAmountResponse.json();
             throw new Error(errorData.message);
@@ -175,7 +175,10 @@ const UploadOrder = () => {
         </div>
       </div>
       <div className="row">
-        <div className="left-side col-md-2 btn-bg">
+        <div
+          className="left-side col-md-2 btn-bg"
+          style={{ minHeight: "100vh" }}
+        >
           <Sidebar />
         </div>
         <div className="right-side col-md-6 bg-light py-5 ps-5">

@@ -92,7 +92,10 @@ const Review = () => {
         </div>
       </div>
       <div className="row">
-        <div className="left-side col-md-2 btn-bg">
+        <div
+          className="left-side col-md-2 btn-bg"
+          style={{ minHeight: "100vh" }}
+        >
           <Sidebar></Sidebar>
         </div>
         <div className="right-side col-md-10 bg-light p-5">

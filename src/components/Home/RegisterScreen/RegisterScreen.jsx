@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import navLogo from "../../../images/logos/logo.png";
-import { UserContext } from "../../../App";
 import { toast } from "react-toastify";
 
 const RegisterScreen = () => {
@@ -10,10 +9,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const history = useHistory();
-  const location = useLocation();
-  const { from } = location.state || { from: { pathname: "/" } };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -34,9 +30,10 @@ const RegisterScreen = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data) {
-            setLoggedInUser(data);
-            history.replace(from);
+          if (data.message === "User registered successfully") {
+            history.replace("/signUp");
+          } else {
+            toast.error(data.message);
           }
         })
         .catch((err) => toast.error(err.message));
