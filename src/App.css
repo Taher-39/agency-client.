@@ -60,7 +60,7 @@
 /* footer section style end */
 
 /* media query */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 767px) {
   .nav-link-border:hover {
     border-bottom: none;
   }
@@ -71,10 +71,6 @@
 
   .header-img {
     width: 500px;
-  }
-
-  .sidebar-dash {
-    min-height: 100vh;
   }
 
   .header {
@@ -90,13 +86,17 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 767px) {
   .header-img {
     width: 280px;
   }
 
   .header {
     clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  }
+
+  .user-name-link {
+    margin-top: 15px;
   }
 
   .client {
@@ -109,10 +109,6 @@
 
   .dashboard-top {
     padding: 0 0 0 100px;
-  }
-
-  .sidebar-dash {
-    min-height: 100%;
   }
 
   .page-name {
@@ -142,6 +138,7 @@
   .footer-bottom {
     padding-right: 100px;
   }
+
 }
 
 .print-button {

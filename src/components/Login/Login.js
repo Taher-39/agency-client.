@@ -94,7 +94,7 @@ const Login = () => {
           ) : (
             <div className="rounded p-4 shadow">
               <h2 className="text-center" style={{ color: "#000" }}>
-                Sign In
+                Login 
               </h2>
               <form onSubmit={submitHandler}>
                 <div className="form-group">
@@ -119,7 +119,7 @@ const Login = () => {
                   type="submit"
                   className="btn btn-primary btn-block mt-3"
                 >
-                  Sign In
+                  Login
                 </button>
               </form>
               <div className="row py-3">

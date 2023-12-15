@@ -23,7 +23,7 @@ export const UserContext = createContext();
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(() => {
     const user = sessionStorage.getItem("loggedInUser");
-    return user ? JSON.parse(user) : {}; 
+    return user ? JSON.parse(user) : {};
   });
 
   return (

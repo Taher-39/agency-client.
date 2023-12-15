@@ -117,12 +117,24 @@ const AddAmount = () => {
             <h2>Add Money</h2>
           </div>
           <div>
-            <h5 className="user">{loggedInUser.name}</h5>
+            <Link
+              className="nav-link login btn user-name-link"
+              style={{ color: "#fff", padding: "10px 30px" }}
+              to="/signUp"
+            >
+              {loggedInUser.name ? (
+                <div>
+                  <span>{loggedInUser.name}</span>
+                </div>
+              ) : (
+                "SignUp"
+              )}
+            </Link>
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="left-side col-md-2 btn-bg sidebar-dash">
+      <div className="row" style={{ height: "100vh" }}>
+        <div className="left-side col-md-2 btn-bg">
           <Sidebar />
         </div>
         <div className="right-side col-md-6 bg-light rounded px-5 pt-3">
@@ -212,8 +224,8 @@ const AddAmount = () => {
             </button>
           </form>
         </div>
-        <div className="col-md-4 pt-5 bg-light">
-          <h5 className="user">
+        <div className="col-md-4 pt-5 bg-light ml-sm-4">
+          <h5 className="user m-5">
             Available Wallet Balance: <span>{loggedInUser.amount} TK</span>
           </h5>
         </div>

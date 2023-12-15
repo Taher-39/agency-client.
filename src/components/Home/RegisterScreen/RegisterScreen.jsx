@@ -41,67 +41,83 @@ const RegisterScreen = () => {
   };
 
   return (
-    <div>
-      <div className="text-center py-4">
-        <img src={navLogo} alt="" style={{ width: "150px" }} />
+    <div
+      className="container-fluid py-5"
+      style={{ backgroundColor: "whitesmoke", minHeight: "100vh" }}
+    >
+      <div className="text-center">
+        <img src={navLogo} alt="Logo" style={{ maxWidth: "150px" }} />
       </div>
-      <div className=" rounded py-5 my-0 mx-auto w-50 shadow">
-        <h1 className="ms-5">Sign Up</h1>
-
-        <form onSubmit={submitHandler} className="ms-5">
-          <div className="mb-2" controlId="name">
-            <label for="floatingTextarea">Name</label>
-            <input
-              className="form-control w-75"
-              type="name"
-              placeholder="Enter name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></input>
+      <div className="row justify-content-center mt-5 ">
+        <div className="col-md-6 ">
+          <div className="rounded py-5 my-0 mx-auto shadow p-5">
+            <h1 className="text-center mb-4">Register</h1>
+            <form onSubmit={submitHandler}>
+              <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                  Name
+                </label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="name"
+                  placeholder="Enter name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input
+                  className="form-control"
+                  type="email"
+                  id="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
+                <input
+                  className="form-control"
+                  type="password"
+                  id="password"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="confirmPassword" className="form-label">
+                  Confirm Password
+                </label>
+                <input
+                  className="form-control"
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-outline-success btn-block"
+              >
+                Register
+              </button>
+            </form>
+            <div className="row mt-3">
+              <div className="col text-center">
+                Have an Account? <Link to="/signUp">Login</Link>
+              </div>
+            </div>
           </div>
-
-          <div className="mb-2" controlId="email">
-            <label for="floatingTextarea">Email</label>
-            <input
-              className="form-control w-75"
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
-          </div>
-
-          <div className="mb-2" controlId="password">
-            <label for="floatingTextarea">Password</label>
-            <input
-              className="form-control w-75"
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></input>
-          </div>
-
-          <div controlId="confirmPassword">
-            <label for="floatingTextarea">Confirm Password</label>
-            <input
-              className="form-control w-75"
-              type="password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            ></input>
-          </div>
-
-          <button type="submit" className="btn btn-outline-success mt-3 ">
-            Register
-          </button>
-        </form>
-
-        <div className="row py-3 ms-5">
-          <span>
-            Have an Account? <Link to="/signUp">Login</Link>
-          </span>
         </div>
       </div>
     </div>

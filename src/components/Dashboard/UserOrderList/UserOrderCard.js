@@ -18,27 +18,29 @@ const UserOrderCard = ({ order }) => {
   }
 
   return (
-    <div className="col-md-4 d-flex align-items-stretch my-3">
-      <div className="shadow p-4" style={{ minWidth: "300px" }}>
-        <div className="d-flex justify-content-around">
-          <div className="img">
-            <img
-              style={{ width: "50px", height: "50px" }}
-              src={`data:image/png;base64, ${order?.image?.img}`}
-              alt=""
-            />
+    <div className="col-md-4 col-sm-6 col-12 my-3">
+      <div className="card shadow">
+        <div className="card-body">
+          <div className="d-flex justify-content-around">
+            {/* <div className="img">
+              <img
+                style={{ width: "50px", height: "50px" }}
+                src={`data:image/png;base64, ${order?.image?.img}`}
+                alt=""
+              />
+            </div> */}
           </div>
-        </div>
-        <h4>{order.category}</h4>
-        <p>{order.description}</p>
+          <h4>{order.category}</h4>
+          <p>{order.description}</p>
 
-        <h6>
-          Payment status: <span className="text-success">Paid</span>
-        </h6>
-        <h6 className="ml-4">
-          Service Status:{" "}
-          <span className={`${statusColor}`}>{order?.status}</span>
-        </h6>
+          <h6>
+            Payment status: <span className="text-success">Paid</span>
+          </h6>
+          <h6 className="ml-4">
+            Service Status:{" "}
+            <span className={`${statusColor}`}>{order?.status}</span>
+          </h6>
+        </div>
       </div>
     </div>
   );

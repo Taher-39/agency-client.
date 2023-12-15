@@ -87,15 +87,24 @@ const Review = () => {
             <h2>Review</h2>
           </div>
           <div>
-            <h5 className="user">{loggedInUser.name}</h5>
+            <Link
+              className="nav-link login btn user-name-link"
+              style={{ color: "#fff", padding: "10px 30px" }}
+              to="/signUp"
+            >
+              {loggedInUser.name ? (
+                <div>
+                  <span>{loggedInUser.name}</span>
+                </div>
+              ) : (
+                "SignUp"
+              )}
+            </Link>
           </div>
         </div>
       </div>
-      <div className="row">
-        <div
-          className="left-side col-md-2 btn-bg"
-          style={{ minHeight: "100vh" }}
-        >
+      <div className="row" style={{ minHeight: "100vh" }}>
+        <div className="left-side col-md-2 btn-bg ">
           <Sidebar></Sidebar>
         </div>
         <div className="right-side col-md-10 bg-light p-5">

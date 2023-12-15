@@ -20,21 +20,32 @@ const Dashboard = () => {
               <h2>Dashboard</h2>
             </div>
             <div>
-              <h5 className="user">{loggedInUser.name}</h5>
+              <Link
+                className="nav-link login btn user-name-link"
+                style={{ color: "#fff", padding: "10px 30px" }}
+                to="/signUp"
+              >
+                {loggedInUser.name ? (
+                  <div>
+                    <span>{loggedInUser.name}</span>
+                  </div>
+                ) : (
+                  "SignUp"
+                )}
+              </Link>
             </div>
           </div>
         </div>
       </div>
-      <div className="row">
-        <div
-          className="left-side col-md-2 btn-bg"
-          style={{ minHeight: "100vh" }}
-        >
-          <Sidebar></Sidebar>
+      <div className="row" style={{ height: "100vh" }}>
+        <div className="left-side col-md-2 btn-bg">
+          <div>
+            <Sidebar></Sidebar>
+          </div>
         </div>
         <div className="right-side col-md-10 bg-light p-5">
           <h3>WellCome {loggedInUser.name}</h3>
-          <div className="col-md-4 pt-5 bg-light">
+          <div className="col-md-4 pt-5 bg-light ">
             <h5>
               Available Wallet Balance:{" "}
               <span>
