@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "./firebase.config";
 import { UserContext } from "../../App";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import navLogo from "../../images/logos/logo.png";
+import navLogo from "../../assets/logos/logo.png";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -94,7 +94,7 @@ const Login = () => {
           ) : (
             <div className="rounded p-4 shadow">
               <h2 className="text-center" style={{ color: "#000" }}>
-                Login 
+                Login
               </h2>
               <form onSubmit={submitHandler}>
                 <div className="form-group">
@@ -126,6 +126,9 @@ const Login = () => {
                 <div className="col">
                   New Customer? <Link to="/register">Register</Link>
                 </div>
+                <div className="col text-right">
+                  <Link to="/forgot-password">Forgot Password?</Link>
+                </div>
               </div>
               <button
                 onClick={handleSignIn}
@@ -133,7 +136,10 @@ const Login = () => {
               >
                 Google SignIn
               </button>
-              <Link to="/" className="btn btn-outline-success btn-block mx-3">
+              <Link
+                to="/"
+                className="btn btn-outline-success btn-block mx-3"
+              >
                 Home
               </Link>
             </div>

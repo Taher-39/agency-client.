@@ -1,17 +1,7 @@
-# Creative Agency
+# Creative Agency Works For Website Creation, Graphics Design And Video Editing
 
-This is a company website, through which some skilled people provide quality services like website / mobile app development, graphics designing and video editing.
+This is a company website, through which some skilled people provide quality services like website     development, graphics designing and video editing.
 
-## Course Information
-
-- Course Code: CSE 4100 and CSE 4200
-- Course Title: Project
-- Submitted By: The Examinee of B. Sc. Engineering Final Examination – 2021
-- Name: Abu Taher
-- Roll Number: 180139
-- Registration Number: 101812
-- Session: 2017-18
-- Supervised by: Dr. Md. Abdur Rahim, Associate Professor, Department of Computer Science and Engineering, Pabna University of Science and Technology
 
 ## Features
 
@@ -31,6 +21,10 @@ This is a company website, through which some skilled people provide quality ser
 - Google/Manual register and login with unique name and email
 - Error/Success handling with react toastify
 - Conditional status color change
+- Send verification code into email when new user try to register
+- Change password/name
+- Forgot password
+- Pagination
 
 ### Admin Features
 
@@ -42,13 +36,10 @@ This is a company website, through which some skilled people provide quality ser
 
 ### Implement Idea
 
-- Send verification code into email when new user try to register
-- Change password/name
-- Forgot password
-- Pagination
 - Send email when client order new services
 - Using regex check email/password
 - Edit services
+- Sorting Services 
 
 ## Technologies Used
 
@@ -84,6 +75,7 @@ This is a company website, through which some skilled people provide quality ser
 - dev-tool
 - github
 - git
+- mongodb compass
 
 ### Deploy
 

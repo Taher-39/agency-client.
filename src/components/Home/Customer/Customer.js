@@ -1,9 +1,9 @@
 import React from 'react';
-import airbnb from '../../../images/logos/airbnb.png';
-import google from '../../../images/logos/google.png';
-import netflix from '../../../images/logos/netflix.png';
-import slack from '../../../images/logos/slack.png';
-import uber from '../../../images/logos/uber.png';
+import airbnb from '../../../assets/logos/airbnb.png';
+import google from '../../../assets/logos/google.png';
+import netflix from '../../../assets/logos/netflix.png';
+import slack from '../../../assets/logos/slack.png';
+import uber from '../../../assets/logos/uber.png';
 
 const Customer = () => {
     return (

@@ -1,50 +1,61 @@
 import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
 import { toast } from "react-toastify";
 
 const AddService = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  const [serviceName, setServiceName] = useState();
-  const [description, setDescription] = useState();
-  const [file, setFile] = useState();
+  const [loggedInUser] = useContext(UserContext);
+  const [serviceName, setServiceName] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null); // Changed initial state to null
   const history = useHistory();
 
   const handleServiceName = (e) => {
     setServiceName(e.target.value);
   };
+
   const handleDescription = (e) => {
     setDescription(e.target.value);
   };
+
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-  const handleFormSubmit = (e) => {
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
     const serviceFormData = new FormData();
     serviceFormData.append("title", serviceName);
     serviceFormData.append("file", file);
     serviceFormData.append("description", description);
 
-    fetch("https://agency-server-git-main-taher-39.vercel.app/services/addService", {
-      method: "POST",
-      body: serviceFormData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data) {
-          toast.success("Services Added Successfully.");
-          setDescription("");
-          setFile("");
-          setServiceName("");
-          history.push("/");
+    try {
+      const response = await fetch(
+        "https://agency-server-git-main-taher-39.vercel.app/services/add-service",
+        {
+          method: "POST",
+          body: serviceFormData,
         }
-      })
-      .catch((err) => toast.error(err));
+      );
 
-    e.preventDefault();
+      if (!response.ok) {
+        throw new Error("Service addition failed");
+      }
+
+      const data = await response.json();
+      toast.success(data.message);
+      setDescription("");
+      setFile(null); // Reset file state to null
+      setServiceName("");
+      history.push("/");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
+
   return (
     <div>
       <div style={{ backgroundColor: "#FBD062" }} className="dashboard-top">
@@ -61,14 +72,14 @@ const AddService = () => {
             <Link
               className="nav-link login btn user-name-link"
               style={{ color: "#fff", padding: "10px 30px" }}
-              to="/signUp"
+              to="/login"
             >
               {loggedInUser.name ? (
                 <div>
                   <span>{loggedInUser.name}</span>
                 </div>
               ) : (
-                "SignUp"
+                "Login"
               )}
             </Link>
           </div>
@@ -88,7 +99,8 @@ const AddService = () => {
                   type="text"
                   placeholder="App-Develop"
                   required
-                  onBlur={handleServiceName}
+                  value={serviceName}
+                  onChange={handleServiceName}
                 />
               </label>
               <br />
@@ -98,7 +110,7 @@ const AddService = () => {
                 <input
                   className="form-control mb-3"
                   type="file"
-                  name="icon"
+                  name="file"
                   required
                   onChange={handleFileChange}
                 />
@@ -110,7 +122,8 @@ const AddService = () => {
                 className="form-control w-50 mb-3"
                 rows="4"
                 cols="50"
-                onBlur={handleDescription}
+                value={description}
+                onChange={handleDescription}
                 required
               />
             </div>

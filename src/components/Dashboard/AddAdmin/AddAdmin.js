@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
 import { toast } from "react-toastify";
 
 const AddAdmin = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -72,14 +72,14 @@ const AddAdmin = () => {
             <Link
               className="nav-link login btn user-name-link"
               style={{ color: "#fff", padding: "10px 30px" }}
-              to="/signUp"
+              to="/login"
             >
               {loggedInUser.name ? (
                 <div>
                   <span>{loggedInUser.name}</span>
                 </div>
               ) : (
-                "SignUp"
+                "Login"
               )}
             </Link>
           </div>

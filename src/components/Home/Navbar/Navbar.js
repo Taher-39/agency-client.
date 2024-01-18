@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../../App";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import "./Navbar.css";
 const Navbar = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   return (
     <div className="header-bg">
       <nav className="navbar navbar-expand-lg navbar-light container">
@@ -48,14 +48,14 @@ const Navbar = () => {
                 <Link
                   className="nav-link login btn"
                   style={{ color: "#fff", padding: "10px 30px" }}
-                  to="/signUp"
+                  to="/login"
                 >
                   {loggedInUser.name ? (
                     <div>
                       <span>{loggedInUser.name}</span>
                     </div>
                   ) : (
-                    "SignUp"
+                    "Login"
                   )}
                 </Link>
               </li>

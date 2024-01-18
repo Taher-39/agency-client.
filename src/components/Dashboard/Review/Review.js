@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../../App";
 import Sidebar from "../Sidebar/Sidebar";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -12,7 +12,7 @@ const colors = {
 };
 
 const Review = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   const [feedback, setFeedback] = useState({});
   const id = loggedInUser._id;
   const history = useHistory();
@@ -90,14 +90,14 @@ const Review = () => {
             <Link
               className="nav-link login btn user-name-link"
               style={{ color: "#fff", padding: "10px 30px" }}
-              to="/signUp"
+              to="/login"
             >
               {loggedInUser.name ? (
                 <div>
                   <span>{loggedInUser.name}</span>
                 </div>
               ) : (
-                "SignUp"
+                "Login"
               )}
             </Link>
           </div>

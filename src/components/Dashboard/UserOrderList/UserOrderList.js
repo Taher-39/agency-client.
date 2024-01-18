@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
 import Sidebar from "../Sidebar/Sidebar";
 import UserOrderCard from "./UserOrderCard";
 
 const UserOrderList = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
@@ -33,14 +33,14 @@ const UserOrderList = () => {
             <Link
               className="nav-link login btn user-name-link"
               style={{ color: "#fff", padding: "10px 30px" }}
-              to="/signUp"
+              to="/login"
             >
               {loggedInUser.name ? (
                 <div>
                   <span>{loggedInUser.name}</span>
                 </div>
               ) : (
-                "SignUp"
+                "Login"
               )}
             </Link>
           </div>

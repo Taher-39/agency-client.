@@ -4,7 +4,7 @@ import { UserContext } from "../../App";
 import { useContext, useEffect } from "react";
 
 const PaymentSuccessScreen = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [setLoggedInUser] = useContext(UserContext);
 
   const location = useLocation();
 
@@ -16,9 +16,13 @@ const PaymentSuccessScreen = () => {
     if (transactionId) {
       setLoggedInUser({});
       sessionStorage.removeItem("loggedInUser");
+      // setLoggedInUser((prevUser) => ({
+      //   ...prevUser,
+      //   amount: 'new-amount',
+      // }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactionId]); 
+  }, [transactionId]);
 
   return (
     <div className="container mt-4">

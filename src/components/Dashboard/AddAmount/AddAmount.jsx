@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
 import { Link } from "react-router-dom";
 import Select from "react-select";
@@ -55,11 +55,8 @@ const countryOptions = [
 
 const AddAmount = () => {
   const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [amount, setAmount] = useState(""); // Initialize amount state as an empty string
-
+  const [amount, setAmount] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
 
   const handleAmountChange = (e) => {
@@ -81,14 +78,14 @@ const AddAmount = () => {
       country: selectedCountry.label,
       currency: selectedCurrency,
     };
+
     fetch("https://agency-server-git-main-taher-39.vercel.app/payment/addMoney", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedFormData),
-    })
-      .then((res) => res.json())
+    }).then((res) => res.json())
       .then((data) => {
         if (data) {
           window.location.replace(data.url);
@@ -120,14 +117,14 @@ const AddAmount = () => {
             <Link
               className="nav-link login btn user-name-link"
               style={{ color: "#fff", padding: "10px 30px" }}
-              to="/signUp"
+              to="/login"
             >
               {loggedInUser.name ? (
                 <div>
                   <span>{loggedInUser.name}</span>
                 </div>
               ) : (
-                "SignUp"
+                "Login"
               )}
             </Link>
           </div>

@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import TotalOrderListTable from "./TotalOrderListTable";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
 
 const TotalOrderList = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   const [totalOrders, setTotalOrders] = useState([]);
   useEffect(() => {
     fetch("https://agency-server-git-main-taher-39.vercel.app/order/get-total-orders")
@@ -31,14 +31,14 @@ const TotalOrderList = () => {
             <Link
               className="nav-link login btn user-name-link"
               style={{ color: "#fff", padding: "10px 30px" }}
-              to="/signUp"
+              to="/login"
             >
               {loggedInUser.name ? (
                 <div>
                   <span>{loggedInUser.name}</span>
                 </div>
               ) : (
-                "SignUp"
+                "Login"
               )}
             </Link>
           </div>

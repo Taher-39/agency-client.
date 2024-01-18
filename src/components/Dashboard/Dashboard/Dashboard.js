@@ -1,11 +1,30 @@
-import React, { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
+import { Pagination } from "react-bootstrap";
 
 const Dashboard = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
+  // Get only paid transactions for pagination
+  const paidTransactions = loggedInUser?.paymentInfo?.filter(
+    (item) => item.paidStatus
+  );
+
+  // Get current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPaymentInfo = paidTransactions?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div>
       <div>
@@ -23,14 +42,14 @@ const Dashboard = () => {
               <Link
                 className="nav-link login btn user-name-link"
                 style={{ color: "#fff", padding: "10px 30px" }}
-                to="/signUp"
+                to="/login"
               >
                 {loggedInUser.name ? (
                   <div>
                     <span>{loggedInUser.name}</span>
                   </div>
                 ) : (
-                  "SignUp"
+                  "Login"
                 )}
               </Link>
             </div>
@@ -49,7 +68,7 @@ const Dashboard = () => {
             <h5>
               Available Wallet Balance:{" "}
               <span>
-                {loggedInUser.amount == 0 ? 0 : loggedInUser.amount} TK
+                {loggedInUser.amount === 0 ? 0 : loggedInUser.amount} TK
               </span>
             </h5>
           </div>
@@ -61,11 +80,11 @@ const Dashboard = () => {
                   <th>No</th>
                   <th>Amount(TK)</th>
                   <th>Date</th>
-                  <th>Tranaction Id</th>
+                  <th>Transaction Id</th>
                 </tr>
               </thead>
               <tbody>
-                {loggedInUser?.paymentInfo?.map((item, index) => (
+                {currentPaymentInfo?.map((item, index) => (
                   <tr key={item._id} className="m-3 p-3">
                     <td>{index + 1}</td>
                     <td>{item.payableAmount}</td>
@@ -75,6 +94,18 @@ const Dashboard = () => {
                 ))}
               </tbody>
             </table>
+            <Pagination>
+              {[...Array(Math.ceil(paidTransactions?.length / itemsPerPage)).keys()].map((number) => (
+                <Pagination.Item
+                  key={number + 1}
+                  active={number + 1 === currentPage}
+                  onClick={() => paginate(number + 1)}
+                >
+                  {number + 1}
+                </Pagination.Item>
+              ))}
+            </Pagination>
+
             <div className="print-button">
               <button
                 className="btn btn-primary"

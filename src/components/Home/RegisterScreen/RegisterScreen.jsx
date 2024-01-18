@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import navLogo from "../../../images/logos/logo.png";
+import { Link } from "react-router-dom";
+import navLogo from "../../../assets/logos/logo.png";
 import { toast } from "react-toastify";
 
 const RegisterScreen = () => {
@@ -8,8 +8,7 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const history = useHistory();
+  const [verificationMessage, setVerificationMessage] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -30,8 +29,13 @@ const RegisterScreen = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.message === "User registered successfully") {
-            history.replace("/signUp");
+          if (data.message) {
+            toast.success(data.message);
+            setVerificationMessage("Verification email sent. Please check your inbox and click the verification link to complete registration.");
+            setName("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
           } else {
             toast.error(data.message);
           }
@@ -52,6 +56,13 @@ const RegisterScreen = () => {
         <div className="col-md-6 ">
           <div className="rounded py-5 my-0 mx-auto shadow p-5">
             <h1 className="text-center mb-4">Register</h1>
+            {verificationMessage && (
+              <div className="row mt-3">
+                <div className="col text-center">
+                  <p>{verificationMessage}</p>
+                </div>
+              </div>
+            )}
             <form onSubmit={submitHandler}>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">
@@ -60,6 +71,7 @@ const RegisterScreen = () => {
                 <input
                   className="form-control"
                   type="text"
+                  required
                   id="name"
                   placeholder="Enter name"
                   value={name}
@@ -71,6 +83,7 @@ const RegisterScreen = () => {
                   Email
                 </label>
                 <input
+                  required
                   className="form-control"
                   type="email"
                   id="email"
@@ -87,6 +100,7 @@ const RegisterScreen = () => {
                   className="form-control"
                   type="password"
                   id="password"
+                  required
                   placeholder="Enter password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -101,6 +115,7 @@ const RegisterScreen = () => {
                   type="password"
                   id="confirmPassword"
                   placeholder="Confirm password"
+                  required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
@@ -114,7 +129,10 @@ const RegisterScreen = () => {
             </form>
             <div className="row mt-3">
               <div className="col text-center">
-                Have an Account? <Link to="/signUp">Login</Link>
+                Have an Account? <Link to="/login">Login</Link>
+                <Link to="/" className='mx-2'>
+                  Home
+                </Link>
               </div>
             </div>
           </div>

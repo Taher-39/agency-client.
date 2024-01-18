@@ -1,5 +1,4 @@
-import React from 'react';
-import navLogo from '../../../images/logos/logo.png';
+// import navLogo from '../../../assets/logos/logo.png';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {

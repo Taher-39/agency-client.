@@ -1,10 +1,10 @@
 import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { Carousel } from 'react-responsive-carousel';
-import  slide1   from'../../../images/carousel-1.png';
-import slide2 from'../../../images/carousel-2.png';
-import slide3 from'../../../images/carousel-3.png';
-import slide4 from'../../../images/carousel-4.png';
+import  slide1   from'../../../assets/carousel-1.png';
+import slide2 from'../../../assets/carousel-2.png';
+import slide3 from'../../../assets/carousel-3.png';
+import slide4 from'../../../assets/carousel-4.png';
 import './Works.css';
 
 function Works() {

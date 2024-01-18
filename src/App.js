@@ -1,9 +1,9 @@
 import "./App.css";
 import Home from "./components/Home/Home/Home";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard/Dashboard";
 import AddService from "./components/Dashboard/AddService/AddService";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import Login from "./components/Login/Login";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import UploadOrder from "./components/Dashboard/UploadOrder/UploadOrder";
@@ -18,7 +18,24 @@ import PaymentFailScreen from "./components/Screen/PaymentFailScreen";
 import PaymentSuccessScreen from "./components/Screen/PaymentSuccessScreen";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import Account from "./components/Dashboard/Account/Account";
+import EmailVerificationScreen from "./components/Screen/EmailVerificationScreen";
+import ForgotPassword from "./components/Screen/ForgotPassword";
+import ResetPassword from "./components/Screen/ResetPassword";
 export const UserContext = createContext();
+
+function NotFound() {
+  return (
+    <div className="container mt-5 text-center">
+      <h2 className="display-4">404 Not Found</h2>
+      <p className="lead">The requested page does not exist.</p>
+      <Link to="/" className="btn btn-outline-success btn-lg">
+        Go to Home
+      </Link>
+    </div>
+  );
+}
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(() => {
@@ -37,7 +54,7 @@ function App() {
             <PrivateRoute path="/addAmount">
               <AddAmount />
             </PrivateRoute>
-            <Route path="/signUp">
+            <Route path="/login">
               <Login></Login>
             </Route>
             <Route path="/register">
@@ -70,9 +87,23 @@ function App() {
             <Route path="/fail-screen">
               <PaymentFailScreen />
             </Route>
+            <Route path="/account">
+              <Account />
+            </Route>
+            <Route path="/verify-email/:token">
+              <EmailVerificationScreen />
+            </Route>
+            <Route path="/forgot-password">
+              <ForgotPassword />
+            </Route>
+            <Route path="/reset-password/:token">
+              <ResetPassword />
+            </Route>
             <Route exact path="/">
               <Home />
             </Route>
+            <Route path="/404" component={NotFound} />
+            <Redirect to="/404" />
           </Switch>
         </Router>
       </UserContext.Provider>

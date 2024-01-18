@@ -1,9 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "./ServiceCard.css";
 
 const ServiceCard = ({ serviceData }) => {
-  const { title, description, image, _id } = serviceData;
+  // const { title, description, image, _id } = serviceData;
+  const { title, description, _id } = serviceData;
 
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">

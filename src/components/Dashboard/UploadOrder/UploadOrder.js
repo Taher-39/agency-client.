@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../../App";
 import Sidebar from "../Sidebar/Sidebar";
-import navLogo from "../../../images/logos/logo.png";
+import navLogo from "../../../assets/logos/logo.png";
 import { toast } from "react-toastify";
 
 const UploadOrder = () => {
@@ -110,8 +110,6 @@ const UploadOrder = () => {
     newOrderForm.append("option", option);
     newOrderForm.append("price", price);
 
-    console.log(newOrderForm);
-
     if (loggedInUser.amount >= price) {
       try {
         const orderResponse = await fetch(
@@ -175,14 +173,14 @@ const UploadOrder = () => {
             <Link
               className="nav-link login btn user-name-link"
               style={{ color: "#fff", padding: "10px 30px" }}
-              to="/signUp"
+              to="/login"
             >
               {loggedInUser.name ? (
                 <div>
                   <span>{loggedInUser.name}</span>
                 </div>
               ) : (
-                "SignUp"
+                "Login"
               )}
             </Link>
           </div>

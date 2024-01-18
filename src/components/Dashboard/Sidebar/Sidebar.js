@@ -8,13 +8,15 @@ import {
   MdOutlineAdminPanelSettings,
   MdOutlineDesignServices,
   MdOutlineDashboard,
+  MdOutlineAccountTree,
 } from "react-icons/md";
+import { LiaHireAHelper } from "react-icons/lia";
 import { FaPlus } from "react-icons/fa";
 import { FcMoneyTransfer } from "react-icons/fc";
 import "./Sidebar.css";
 
 const Sidebar = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const [loggedInUser] = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState(loggedInUser.isAdmin);
 
   useEffect(() => {
@@ -57,9 +59,22 @@ const Sidebar = () => {
                   <MdOutlineDesignServices /> Manage Services{" "}
                 </Link>
               </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/account">
+                  <MdOutlineAccountTree /> Account{" "}
+                </Link>
+              </li>
             </>
           ) : (
             <>
+              <li className="sidebar-links pb-2">
+                <Link
+                  className="sidebar-link"
+                  to="/uploadOrder/6572da2ce2a9a2de69554dab"
+                >
+                  <LiaHireAHelper /> Hire Us
+                </Link>
+              </li>
               <li className="sidebar-links pb-2">
                 <Link className="sidebar-link" to="/dashboard">
                   <MdOutlineDashboard /> Dashboard
@@ -78,6 +93,11 @@ const Sidebar = () => {
               <li className="sidebar-links">
                 <Link className="sidebar-link" to="/addAmount">
                   <FcMoneyTransfer /> Add Money
+                </Link>
+              </li>
+              <li className="sidebar-links pb-2">
+                <Link className="sidebar-link" to="/account">
+                  <MdOutlineAccountTree /> Account{" "}
                 </Link>
               </li>
             </>
