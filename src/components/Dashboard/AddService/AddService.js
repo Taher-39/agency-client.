@@ -6,40 +6,44 @@ import { UserContext } from "../../../App";
 import { toast } from "react-toastify";
 
 const AddService = () => {
-  const [loggedInUser] = useContext(UserContext);
-  const [serviceName, setServiceName] = useState("");
-  const [description, setDescription] = useState("");
-  const [file, setFile] = useState(null); // Changed initial state to null
+  const { loggedInUser } = useContext(UserContext);
+  const [serviceData, setServiceData] = useState({
+    serviceName: "",
+    description: "",
+    subcategories: [{ name: "Default Subcategory", price: 0 }],
+  });
   const history = useHistory();
 
-  const handleServiceName = (e) => {
-    setServiceName(e.target.value);
+  const handleInputChange = (field, value) => {
+    setServiceData({ ...serviceData, [field]: value });
   };
 
-  const handleDescription = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const handleSubcategoryChange = (index, field, value) => {
+    const updatedSubcategories = [...serviceData.subcategories];
+    updatedSubcategories[index] = { ...updatedSubcategories[index], [field]: value };
+    setServiceData({ ...serviceData, subcategories: updatedSubcategories });
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const serviceFormData = new FormData();
-    serviceFormData.append("title", serviceName);
-    serviceFormData.append("file", file);
-    serviceFormData.append("description", description);
+    const { serviceName, description, subcategories } = serviceData;
 
     try {
-      const response = await fetch(
-        "https://agency-server-git-main-taher-39.vercel.app/services/add-service",
-        {
-          method: "POST",
-          body: serviceFormData,
-        }
-      );
+      const response = await fetch("https://agency-server-git-main-taher-39.vercel.app/services/add-service", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: serviceName,
+          description,
+          prices: subcategories.map(({ name, price }) => ({
+            subcategory: name.trim() || "Default Subcategory",
+            price: price || 0,
+          })),
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Service addition failed");
@@ -47,13 +51,45 @@ const AddService = () => {
 
       const data = await response.json();
       toast.success(data.message);
-      setDescription("");
-      setFile(null); // Reset file state to null
-      setServiceName("");
+      setServiceData({
+        serviceName: "",
+        description: "",
+        subcategories: [{ name: "Default Subcategory", price: 0 }],
+      });
       history.push("/");
     } catch (error) {
-      toast.error(error.message);
+      toast.error("Failed to add service");
     }
+  };
+
+  const renderSubcategoryInputs = () => {
+    return serviceData.subcategories.map((subcategory, index) => (
+      <div key={index} className="mb-3">
+        <label>Subcategory Name</label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="e.g., Single Page"
+          value={subcategory.name}
+          onChange={(e) => handleSubcategoryChange(index, "name", e.target.value)}
+        />
+        <label>Price</label>
+        <input
+          type="number"
+          className="form-control"
+          placeholder="e.g., 2000"
+          value={subcategory.price}
+          onChange={(e) => handleSubcategoryChange(index, "price", e.target.value)}
+        />
+      </div>
+    ));
+  };
+
+  const addSubcategory = () => {
+    setServiceData({
+      ...serviceData,
+      subcategories: [...serviceData.subcategories, { name: "", price: 0 }],
+    });
   };
 
   return (
@@ -99,22 +135,17 @@ const AddService = () => {
                   type="text"
                   placeholder="App-Develop"
                   required
-                  value={serviceName}
-                  onChange={handleServiceName}
+                  value={serviceData.serviceName}
+                  onChange={(e) => handleInputChange("serviceName", e.target.value)}
                 />
               </label>
               <br />
 
-              <label>
-                Icon
-                <input
-                  className="form-control mb-3"
-                  type="file"
-                  name="file"
-                  required
-                  onChange={handleFileChange}
-                />
-              </label>
+              {renderSubcategoryInputs()}
+
+              <button type="button" className="btn btn-bg text-light mb-3" onClick={addSubcategory}>
+                Add Subcategory
+              </button>
               <br />
 
               <label>Description</label>
@@ -122,8 +153,8 @@ const AddService = () => {
                 className="form-control w-50 mb-3"
                 rows="4"
                 cols="50"
-                value={description}
-                onChange={handleDescription}
+                value={serviceData.description}
+                onChange={(e) => handleInputChange("description", e.target.value)}
                 required
               />
             </div>

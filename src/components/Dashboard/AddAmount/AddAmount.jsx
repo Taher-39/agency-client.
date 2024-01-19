@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
@@ -54,13 +54,13 @@ const countryOptions = [
 ];
 
 const AddAmount = () => {
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const { loggedInUser} = useContext(UserContext);
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [amount, setAmount] = useState("");
+  const [amountInput, setAmountInput] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
 
   const handleAmountChange = (e) => {
-    setAmount(e.target.value);
+    setAmountInput(e.target.value);
   };
   const handleCurrencyChange = (e) => {
     setSelectedCurrency(e.target.value);
@@ -72,7 +72,7 @@ const AddAmount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedFormData = {
-      amount: Number(amount),
+      amount: Number(amountInput),
       name: loggedInUser.name,
       email: loggedInUser.email,
       country: selectedCountry.label,
@@ -89,9 +89,6 @@ const AddAmount = () => {
       .then((data) => {
         if (data) {
           window.location.replace(data.url);
-
-          setLoggedInUser({ ...loggedInUser, amount: data.user.amount });
-          sessionStorage.setItem("loggedInUser", JSON.stringify(data.user));
         } else {
           toast.error(data.message);
         }
@@ -191,7 +188,7 @@ const AddAmount = () => {
                 id="amount"
                 name="amount"
                 placeholder="Your Amount"
-                value={amount}
+                value={amountInput}
                 onChange={handleAmountChange}
                 required
               />

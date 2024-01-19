@@ -45,7 +45,7 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+      <UserContext.Provider value={{loggedInUser, setLoggedInUser}}>
         <Router>
           <Switch>
             <PrivateRoute path="/dashboard">

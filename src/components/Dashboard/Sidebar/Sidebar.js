@@ -16,7 +16,7 @@ import { FcMoneyTransfer } from "react-icons/fc";
 import "./Sidebar.css";
 
 const Sidebar = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState(loggedInUser.isAdmin);
 
   useEffect(() => {

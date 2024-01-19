@@ -22,7 +22,7 @@ const Feedback = () => {
           <span className="text-sp">Feedback</span>
         </h1>
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          {userFeedback.map((review, index) => (
+          {userFeedback?.map((review, index) => (
             <div key={index} className="col">
               <div className="card shadow rounded">
                 <div className="card-body">

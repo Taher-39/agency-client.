@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+  const {loggedInUser, setLoggedInUser} = useContext(UserContext);
 
   if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);

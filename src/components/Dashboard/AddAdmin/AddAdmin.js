@@ -6,7 +6,7 @@ import { UserContext } from "../../../App";
 import { toast } from "react-toastify";
 
 const AddAdmin = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {

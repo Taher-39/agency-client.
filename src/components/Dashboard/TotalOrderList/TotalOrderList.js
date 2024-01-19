@@ -6,7 +6,7 @@ import navLogo from "../../../assets/logos/logo.png";
 import { UserContext } from "../../../App";
 
 const TotalOrderList = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
   const [totalOrders, setTotalOrders] = useState([]);
   useEffect(() => {
     fetch("https://agency-server-git-main-taher-39.vercel.app/order/get-total-orders")

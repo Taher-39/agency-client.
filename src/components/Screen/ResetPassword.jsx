@@ -22,7 +22,7 @@ const ResetPassword = () => {
             .then((data) => {
                 if (data.message) {
                     toast.success(data.message);
-                    history.push("/login"); // Redirect to login page after successful password reset
+                    history.push("/login"); 
                 } else {
                     toast.error(data.message);
                 }

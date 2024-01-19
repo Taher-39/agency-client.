@@ -6,7 +6,7 @@ import { UserContext } from "../../../App";
 import { Pagination } from "react-bootstrap";
 
 const Dashboard = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 

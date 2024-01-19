@@ -16,7 +16,7 @@ This is a company website, through which some skilled people provide quality ser
 
 - Payment with visa card/mobile banking/bank account using SSL Commarz
 - Review & Rating if client have any order
-- Dashboard where client can see payment history and current wallet balance with printing feature
+- Dashboard where client can see payment history and current wallet balance with printing     feature
 - Order service list with progress status
 - Google/Manual register and login with unique name and email
 - Error/Success handling with react toastify
@@ -25,6 +25,7 @@ This is a company website, through which some skilled people provide quality ser
 - Change password/name
 - Forgot password
 - Pagination
+- Search Services
 
 ### Admin Features
 

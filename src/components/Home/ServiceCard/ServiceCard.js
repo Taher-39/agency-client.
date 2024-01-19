@@ -2,8 +2,19 @@ import { Link } from "react-router-dom";
 import "./ServiceCard.css";
 
 const ServiceCard = ({ serviceData }) => {
-  // const { title, description, image, _id } = serviceData;
-  const { title, description, _id } = serviceData;
+  const { description, _id, name, prices } = serviceData;
+
+  const getStartPrice = () => {
+    if (prices && prices.length > 0) {
+      const priceArray = prices.map((price) => price.price);
+      const minPrice = Math.min(...priceArray);
+
+      return minPrice;
+    }
+    return 0;
+  };
+
+  const startPrice = getStartPrice();
 
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
@@ -14,19 +25,11 @@ const ServiceCard = ({ serviceData }) => {
           alt="Service Img"
         /> */}
         <div className="card-body">
-          <h4 className="card-title text-center">{title}</h4>
+          <h4 className="card-title text-center">{name}</h4>
           <p className="card-text text-center">{description}</p>
           <p className="card-text text-center bg-light text-dark py-2 rounded">
             <span className="start-text">
-              Start At{" "}
-              {title === "Figma To React/NextJs"
-                ? 1300
-                : title === "Web Development"
-                ? 2000
-                : title === "Graphics Design"
-                ? 1500
-                : "5000"}{" "}
-              TK
+              Start At {startPrice} TK
             </span>
           </p>
           <div className="text-center">

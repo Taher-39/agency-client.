@@ -16,19 +16,20 @@ const UserOrderCard = ({ order }) => {
     default:
       statusColor = "text-dark";
   }
+  console.log("Image URL:", `https://agency-server-git-main-taher-39.vercel.app/${order.file}`);
 
   return (
     <div className="col-md-4 col-sm-6 col-12 my-3">
       <div className="card shadow">
         <div className="card-body">
           <div className="d-flex justify-content-around">
-            {/* <div className="img">
+            <div className="img">
               <img
-                style={{ width: "50px", height: "50px" }}
-                src={`data:image/png;base64, ${order?.image?.img}`}
+                style={{ width: "100%", height: "auto" }}
+                src={`https://agency-server-git-main-taher-39.vercel.app/${order.file}`}
                 alt=""
               />
-            </div> */}
+            </div>
           </div>
           <h4>{order.category}</h4>
           <p>{order.description}</p>

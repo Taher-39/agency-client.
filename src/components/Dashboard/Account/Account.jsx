@@ -6,7 +6,7 @@ import navLogo from "../../../assets/logos/logo.png";
 import { toast } from "react-toastify";
 
 const Account = () => {
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const {loggedInUser, setLoggedInUser} = useContext(UserContext);
     const [formData, setFormData] = useState({
         newName: "",
         currentPassword: "",

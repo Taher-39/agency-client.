@@ -7,13 +7,13 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { toast } from "react-toastify";
 
 const ManageServices = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
   const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    fetch(`https://agency-server-git-main-taher-39.vercel.app/services/getAllServices?page=${currentPage}`)
+    fetch(`https://agency-server-git-main-taher-39.vercel.app/services/get-limited-services?page=${currentPage}`)
       .then((res) => res.json())
       .then((data) => {
         setServices(data.services);
@@ -82,22 +82,22 @@ const ManageServices = () => {
                 <tr>
                   <th>Service Name</th>
                   <th>Description</th>
-                  <th>Image</th>
+                  {/* <th>Image</th> */}
                   <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
                 {services?.map((item) => (
                   <tr key={item._id} className="m-3 p-3">
-                    <td>{item.title}</td>
+                    <td>{item.name}</td>
                     <td>{item.description}</td>
-                    <td>
+                    {/* <td>
                       <img
                         style={{ width: "25px", height: "25px" }}
                         src={`data:image/png;base64, ${item.image?.img}`}
                         alt=""
                       />
-                    </td>
+                    </td> */}
                     <td>
                       <button
                         className="text-danger cursor-pointer btn"

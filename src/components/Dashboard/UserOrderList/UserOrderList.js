@@ -6,7 +6,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import UserOrderCard from "./UserOrderCard";
 
 const UserOrderList = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
   const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {

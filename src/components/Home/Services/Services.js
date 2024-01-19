@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ServiceCard from "../ServiceCard/ServiceCard";
 
 const Services = () => {
@@ -8,7 +8,7 @@ const Services = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    fetch(`https://agency-server-git-main-taher-39.vercel.app/services/getAllServices?page=${currentPage}&search=${searchTerm}`)
+    fetch(`https://agency-server-git-main-taher-39.vercel.app/services/get-limited-services?page=${currentPage}&search=${searchTerm}`)
       .then((res) => res.json())
       .then((data) => {
         setServices(data.services);

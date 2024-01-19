@@ -12,7 +12,7 @@ const colors = {
 };
 
 const Review = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
   const [feedback, setFeedback] = useState({});
   const id = loggedInUser._id;
   const history = useHistory();

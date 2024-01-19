@@ -4,7 +4,7 @@ import { UserContext } from "../../../App";
 import navLogo from "../../../assets/logos/logo.png";
 import "./Navbar.css";
 const Navbar = () => {
-  const [loggedInUser] = useContext(UserContext);
+  const {loggedInUser} = useContext(UserContext);
   return (
     <div className="header-bg">
       <nav className="navbar navbar-expand-lg navbar-light container">
