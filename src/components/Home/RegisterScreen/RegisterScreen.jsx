@@ -10,8 +10,16 @@ const RegisterScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [verificationMessage, setVerificationMessage] = useState("");
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email address");
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
     } else {

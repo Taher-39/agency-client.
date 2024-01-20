@@ -1,6 +1,6 @@
 # Creative Agency Works For Website Creation, Graphics Design And Video Editing
 
-This is a company website, through which some skilled people provide quality services like website     development, graphics designing and video editing.
+This is a company website, through which some skilled people provide quality services like website development, graphics designing and video editing.
 
 
 ## Features

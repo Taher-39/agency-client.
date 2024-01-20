@@ -35,6 +35,7 @@ const UploadOrder = () => {
 
   const handleServiceChange = (event) => {
     const selectedService = event.target.value;
+    console.log(event.target.value);
     setSelectedService(selectedService);
     setSelectedOption("");
     setPrice(0);
@@ -102,6 +103,7 @@ const UploadOrder = () => {
 
           if (updateAmountResponse.ok) {
             const updateAmountData = await updateAmountResponse.json();
+            console.log(updateAmountData.user.amount)
             setLoggedInUser((prevUser) => ({
               ...prevUser,
               amount: updateAmountData.user.amount,
@@ -175,6 +177,7 @@ const UploadOrder = () => {
             <select
               className="form-select w-75 mb-3"
               onChange={handleServiceChange}
+              required
             >
               <option value="">Select a Service</option>
               {serviceOptions.map((service) => (
@@ -190,6 +193,7 @@ const UploadOrder = () => {
                 <select
                   className="form-select w-75"
                   onChange={handleOptionChange}
+                  required
                 >
                   <option value="">Select an Option</option>
                   {serviceOptions

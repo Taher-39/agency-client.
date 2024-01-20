@@ -10,13 +10,12 @@ import {
   MdOutlineDashboard,
   MdOutlineAccountTree,
 } from "react-icons/md";
-import { LiaHireAHelper } from "react-icons/lia";
 import { FaPlus } from "react-icons/fa";
 import { FcMoneyTransfer } from "react-icons/fc";
 import "./Sidebar.css";
 
 const Sidebar = () => {
-  const {loggedInUser} = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
   const [isAdmin, setIsAdmin] = useState(loggedInUser.isAdmin);
 
   useEffect(() => {
@@ -67,14 +66,14 @@ const Sidebar = () => {
             </>
           ) : (
             <>
-              <li className="sidebar-links pb-2">
+              {/* <li className="sidebar-links pb-2">
                 <Link
                   className="sidebar-link"
                   to="/uploadOrder/6572da2ce2a9a2de69554dab"
                 >
                   <LiaHireAHelper /> Hire Us
                 </Link>
-              </li>
+              </li> */}
               <li className="sidebar-links pb-2">
                 <Link className="sidebar-link" to="/dashboard">
                   <MdOutlineDashboard /> Dashboard

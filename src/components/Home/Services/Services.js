@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ServiceCard from "../ServiceCard/ServiceCard";
 
 const Services = () => {
@@ -6,15 +6,28 @@ const Services = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [sortBy, setSortBy] = useState("uploadDate");
+  const [sortOrder, setSortOrder] = useState("desc");
 
   useEffect(() => {
-    fetch(`https://agency-server-git-main-taher-39.vercel.app/services/get-limited-services?page=${currentPage}&search=${searchTerm}`)
+    fetchServices();
+  }, [currentPage, searchTerm, sortBy, sortOrder]);
+
+  const fetchServices = () => {
+    fetch(`https://agency-server-git-main-taher-39.vercel.app/services/get-limited-services?page=${currentPage}&search=${searchTerm}&sortBy=${sortBy}&sortOrder=${sortOrder}`)
       .then((res) => res.json())
       .then((data) => {
         setServices(data.services);
         setTotalPages(data.totalPages);
       });
-  }, [currentPage, searchTerm]);
+  };
+
+  const handleSortChange = (e) => {
+    const [sort, order] = e.target.value.split("-");
+    setSortBy(sort);
+    setSortOrder(order);
+  };
+
   return (
     <div>
       <div className="container">
@@ -22,19 +35,34 @@ const Services = () => {
           <span className="text-service">Provide awesome</span>{" "}
           <span className="text-sp">services</span>
         </h1>
-        <div className="row">
-          <div className="col-md-6 mx-auto mt-3 mb-5">
+
+        <div className="row justify-content-center">
+          <div className="col-md-6 my-3 text-center">
             <input
               type="text"
-              className="form-control"
+              className="form-control d-inline w-75"
               placeholder="Search services..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
+
+          <div className="col-md-6 my-3 d-flex align-items-center">
+            <label htmlFor="sortSelect" className="form-label me-2">Sort By:</label>
+            <select
+              id="sortSelect"
+              className="form-select w-50"
+              value={`${sortBy}-${sortOrder}`}
+              onChange={handleSortChange}
+            >
+              <option value="uploadDate-desc">Latest Upload</option>
+              <option value="uploadDate-asc">Oldest Upload</option>
+              <option value="orderCount-desc">Most Popular</option>
+            </select>
+          </div>
         </div>
+
         <div className="row">
-          {/* Service Cards */}
           {services.length ? (
             services.map((serviceData) => (
               <ServiceCard key={serviceData._id} serviceData={serviceData} />
@@ -61,7 +89,6 @@ const Services = () => {
             </nav>
           )}
         </div>
-
       </div>
     </div>
   );

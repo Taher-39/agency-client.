@@ -31,6 +31,8 @@ const UserOrderCard = ({ order }) => {
               />
             </div>
           </div>
+          <h4>{order.serviceName}</h4>
+          <h6>{order.optionName}</h6>
           <h4>{order.category}</h4>
           <p>{order.description}</p>
 

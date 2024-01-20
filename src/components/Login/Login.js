@@ -1,7 +1,4 @@
 import React, { useContext, useState } from "react";
-import firebase from "firebase/app";
-import "firebase/auth";
-import firebaseConfig from "./firebase.config";
 import { UserContext } from "../../App";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import navLogo from "../../assets/logos/logo.png";
@@ -10,31 +7,11 @@ import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {loggedInUser, setLoggedInUser} = useContext(UserContext);
-
-  if (firebase.apps.length === 0) {
-    firebase.initializeApp(firebaseConfig);
-  }
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
   const history = useHistory();
   const location = useLocation();
   const { from } = location.state || { from: { pathname: "/" } };
-
-  const handleSignIn = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        var user = result.user;
-        var newUser = { name: user.displayName, email: user.email };
-        setLoggedInUser(newUser);
-        history.replace(from);
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -130,12 +107,6 @@ const Login = () => {
                   <Link to="/forgot-password">Forgot Password?</Link>
                 </div>
               </div>
-              <button
-                onClick={handleSignIn}
-                className="btn btn-danger btn-block my-3"
-              >
-                Google SignIn
-              </button>
               <Link
                 to="/"
                 className="btn btn-outline-success btn-block mx-3"
