@@ -1,11 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../../App";
 import Sidebar from "../Sidebar/Sidebar";
 import navLogo from "../../../assets/logos/logo.png";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const UploadOrder = () => {
+  const { id } = useParams();
+  console.log(id)
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const [description, setDescription] = useState("");
   const [orderFile, setOrderFile] = useState();
@@ -25,17 +28,23 @@ const UploadOrder = () => {
         const data = await response.json();
         const services = data.services || [];
         setServiceOptions(services);
+        console.log(services)
+
+        const selectedService = services.find((service) => service._id === id);
+        if (selectedService) {
+          setSelectedService(selectedService._id);
+        }
+
       } catch (error) {
-        console.error("Error fetching services:", error.message);
+        toast.error("Error fetching services:", error.message);
       }
     };
 
     fetchServices();
-  }, []);
+  }, [id]);
 
   const handleServiceChange = (event) => {
     const selectedService = event.target.value;
-    console.log(event.target.value);
     setSelectedService(selectedService);
     setSelectedOption("");
     setPrice(0);
@@ -62,6 +71,22 @@ const UploadOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newOrderForm = createOrderForm();
+
+    if (loggedInUser.amount >= price) {
+      try {
+        await uploadOrder(newOrderForm);
+        await updateUserAmount(price);
+        history.push("/userOrders");
+      } catch (error) {
+        toast.error(error.message);
+      }
+    } else {
+      toast.error("Your Wallet Price Is Insufficient. Pay From AddMoney Option");
+    }
+  };
+
+  const createOrderForm = () => {
     const newOrderForm = new FormData();
     newOrderForm.append("name", loggedInUser.name);
     newOrderForm.append("email", loggedInUser.email);
@@ -71,56 +96,55 @@ const UploadOrder = () => {
     newOrderForm.append("option", selectedOption);
     newOrderForm.append("price", price);
     newOrderForm.append("file", orderFile);
+    return newOrderForm;
+  };
 
-    if (loggedInUser.amount >= price) {
-      try {
-        const orderResponse = await fetch("https://agency-server-git-main-taher-39.vercel.app/order/upload-order", {
-          method: "POST",
-          body: newOrderForm,
-        });
-
-        if (!orderResponse.ok) {
-          throw new Error("Error uploading order");
-        }
-
-        const orderData = await orderResponse.json();
-
-        if (orderData.error) {
-          toast.error(orderData.error);
-        } else {
-          toast.success("Order Submitted, Check Service List");
-
-          const updateAmountResponse = await fetch(
-            `https://agency-server-git-main-taher-39.vercel.app/auth/users/${userId}/update-amount`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ price }),
-            }
-          );
-
-          if (updateAmountResponse.ok) {
-            const updateAmountData = await updateAmountResponse.json();
-            console.log(updateAmountData.user.amount)
-            setLoggedInUser((prevUser) => ({
-              ...prevUser,
-              amount: updateAmountData.user.amount,
-            }));
-            history.push("/userOrders");
-          } else {
-            const errorData = await updateAmountResponse.json();
-            throw new Error(errorData.message);
-          }
-        }
-      } catch (error) {
-        toast.error(error.message);
+  const uploadOrder = async (newOrderForm) => {
+    const orderResponse = await fetch(
+      "https://agency-server-git-main-taher-39.vercel.app/order/upload-order",
+      {
+        method: "POST",
+        body: newOrderForm,
       }
+    );
+
+    if (!orderResponse.ok) {
+      throw new Error("Error uploading order");
+    }
+
+    const orderData = await orderResponse.json();
+
+    if (orderData.error) {
+      throw new Error(orderData.error);
     } else {
-      toast.error("Your Wallet Price Is Insufficient. Pay From AddMoney Option");
+      toast.success("Order Submitted, Check Service List");
     }
   };
+
+  const updateUserAmount = async (price) => {
+    const updateAmountResponse = await fetch(
+      `https://agency-server-git-main-taher-39.vercel.app/auth/users/${userId}/update-amount`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ price }),
+      }
+    );
+
+    if (!updateAmountResponse.ok) {
+      const errorData = await updateAmountResponse.json();
+      throw new Error(errorData.message);
+    } else {
+      const updateAmountData = await updateAmountResponse.json();
+      setLoggedInUser((prevUser) => ({
+        ...prevUser,
+        amount: updateAmountData.user.amount,
+      }));
+    }
+  };
+
 
   return (
     <div>
@@ -177,15 +201,19 @@ const UploadOrder = () => {
             <select
               className="form-select w-75 mb-3"
               onChange={handleServiceChange}
+              value={selectedService}
               required
             >
-              <option value="">Select a Service</option>
+              <option value="" disabled hidden>
+                Select a Service
+              </option>
               {serviceOptions.map((service) => (
                 <option key={service._id} value={service._id}>
                   {service.name}
                 </option>
               ))}
             </select>
+
 
             {selectedService && (
               <div className="my-4">

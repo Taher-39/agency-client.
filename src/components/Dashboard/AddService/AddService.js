@@ -10,7 +10,7 @@ const AddService = () => {
   const [serviceData, setServiceData] = useState({
     serviceName: "",
     description: "",
-    subcategories: [{ name: "Default Subcategory", price: 0 }],
+    subcategories: [{ subcategoryName: "Default Subcategory", price: 0 }],
   });
   const history = useHistory();
 
@@ -38,8 +38,8 @@ const AddService = () => {
         body: JSON.stringify({
           name: serviceName,
           description,
-          prices: subcategories.map(({ name, price }) => ({
-            subcategory: name.trim() || "Default Subcategory",
+          prices: subcategories.map(({ subcategoryName, price }) => ({
+            subcategory: (subcategoryName ? subcategoryName.trim() : "Default Subcategory"),
             price: price || 0,
           })),
         }),
@@ -54,13 +54,14 @@ const AddService = () => {
       setServiceData({
         serviceName: "",
         description: "",
-        subcategories: [{ name: "Default Subcategory", price: 0 }],
+        subcategories: [{ subcategoryName: "", price: 0 }],
       });
       history.push("/");
     } catch (error) {
       toast.error("Failed to add service");
     }
   };
+
 
   const renderSubcategoryInputs = () => {
     return serviceData.subcategories.map((subcategory, index) => (
@@ -70,8 +71,8 @@ const AddService = () => {
           type="text"
           className="form-control"
           placeholder="e.g., Single Page"
-          value={subcategory.name}
-          onChange={(e) => handleSubcategoryChange(index, "name", e.target.value)}
+          value={subcategory.subcategoryName}
+          onChange={(e) => handleSubcategoryChange(index, "subcategoryName", e.target.value)}
         />
         <label>Price</label>
         <input
@@ -88,7 +89,7 @@ const AddService = () => {
   const addSubcategory = () => {
     setServiceData({
       ...serviceData,
-      subcategories: [...serviceData.subcategories, { name: "", price: 0 }],
+      subcategories: [...serviceData.subcategories, { subcategoryName: "", price: 0 }],
     });
   };
 

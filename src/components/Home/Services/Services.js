@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ServiceCard from "../ServiceCard/ServiceCard";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -78,15 +77,7 @@ const Services = () => {
           ) : (
             <h4 className="text-center pt-5 text-secondary">Loading...</h4>
           )}
-          <div className="text-center">
-            <Link
-              className="btn btn-bg text-light py-2 w-25"
-              style={{ textDecoration: "none", padding: "0px 30px" }}
-              to={`/uploadOrder/6572da2ce2a9a2de69554dab`}
-            >
-              Hire Us
-            </Link>
-          </div>
+          
 
           {totalPages > 1 && (
             <nav className="mt-4">

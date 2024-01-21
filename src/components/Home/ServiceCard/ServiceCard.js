@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import "./ServiceCard.css";
 
 const ServiceCard = ({ serviceData }) => {
-  const { description, name, prices, orderCount } = serviceData;
+  const { description, name, _id, prices, orderCount } = serviceData;
 
   const getStartPrice = () => {
     if (prices && prices.length > 0) {
@@ -28,8 +29,16 @@ const ServiceCard = ({ serviceData }) => {
             <p className="mb-0">Orders: {orderCount}</p>
           </div>
 
+          <div className="text-center">
+            <Link
+              className="btn btn-bg text-light py-2 "
+              style={{ textDecoration: "none", padding: "0px 30px" }}
+              to={`/uploadOrder/${_id}`}
+            >
+              Hire Us
+            </Link>
+          </div>
 
-          
         </div>
       </div>
     </div>

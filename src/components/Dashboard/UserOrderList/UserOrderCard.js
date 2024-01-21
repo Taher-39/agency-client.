@@ -23,13 +23,13 @@ const UserOrderCard = ({ order }) => {
       <div className="card shadow">
         <div className="card-body">
           <div className="d-flex justify-content-around">
-            <div className="img">
+            {/* <div className="img">
               <img
                 style={{ width: "100%", height: "auto" }}
                 src={`https://agency-server-git-main-taher-39.vercel.app/${order.file}`}
                 alt=""
               />
-            </div>
+            </div> */}
           </div>
           <h4>{order.serviceName}</h4>
           <h6>{order.optionName}</h6>
