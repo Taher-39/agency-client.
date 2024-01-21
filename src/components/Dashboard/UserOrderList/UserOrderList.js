@@ -6,7 +6,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import UserOrderCard from "./UserOrderCard";
 
 const UserOrderList = () => {
-  const {loggedInUser} = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
   const [userOrders, setUserOrders] = useState([]);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const UserOrderList = () => {
                 <UserOrderCard order={order} key={order._id}></UserOrderCard>
               ))
             ) : (
-              <h4 className="text-center pt-5 text-secondary">Loading...</h4>
+              <h4 className="text-center pt-5 text-secondary">Order List Empty.</h4>
             )}
           </div>
         </div>

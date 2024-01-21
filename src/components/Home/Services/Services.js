@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ServiceCard from "../ServiceCard/ServiceCard";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -9,18 +10,25 @@ const Services = () => {
   const [sortBy, setSortBy] = useState("uploadDate");
   const [sortOrder, setSortOrder] = useState("desc");
 
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(`https://agency-server-git-main-taher-39.vercel.app/services/get-limited-services?page=${currentPage}&search=${searchTerm}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch services");
+      }
+
+      const data = await response.json();
+      setServices(data.services);
+      setTotalPages(data.totalPages);
+    } catch (error) {
+      console.error("Error fetching services:", error.message);
+    }
+  };
+
   useEffect(() => {
     fetchServices();
+    // eslint-disable-next-line
   }, [currentPage, searchTerm, sortBy, sortOrder]);
-
-  const fetchServices = () => {
-    fetch(`https://agency-server-git-main-taher-39.vercel.app/services/get-limited-services?page=${currentPage}&search=${searchTerm}&sortBy=${sortBy}&sortOrder=${sortOrder}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setServices(data.services);
-        setTotalPages(data.totalPages);
-      });
-  };
 
   const handleSortChange = (e) => {
     const [sort, order] = e.target.value.split("-");
@@ -29,7 +37,7 @@ const Services = () => {
   };
 
   return (
-    <div>
+    <div id='services'>
       <div className="container">
         <h1 className="text-center mt-5">
           <span className="text-service">Provide awesome</span>{" "}
@@ -70,8 +78,16 @@ const Services = () => {
           ) : (
             <h4 className="text-center pt-5 text-secondary">Loading...</h4>
           )}
+          <div className="text-center">
+            <Link
+              className="btn btn-bg text-light py-2 w-25"
+              style={{ textDecoration: "none", padding: "0px 30px" }}
+              to={`/uploadOrder/6572da2ce2a9a2de69554dab`}
+            >
+              Hire Us
+            </Link>
+          </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <nav className="mt-4">
               <ul className="pagination justify-content-center">

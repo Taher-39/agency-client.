@@ -6,7 +6,7 @@ import navLogo from "../../../assets/logos/logo.png";
 import { toast } from "react-toastify";
 
 const Account = () => {
-    const {loggedInUser, setLoggedInUser} = useContext(UserContext);
+    const { loggedInUser, setLoggedInUser } = useContext(UserContext);
     const [formData, setFormData] = useState({
         newName: "",
         currentPassword: "",
@@ -58,7 +58,6 @@ const Account = () => {
 
     const handlePasswordUpdate = async (e) => {
         e.preventDefault();
-
         try {
             const response = await fetch("https://agency-server-git-main-taher-39.vercel.app/auth/change-password", {
                 method: "POST",
@@ -88,6 +87,7 @@ const Account = () => {
             console.error("Error updating password:", error.message);
         }
     };
+    
     return (
         <div>
             <div>
@@ -126,7 +126,7 @@ const Account = () => {
                     </div>
                 </div>
                 <div className="right-side col-md-10 bg-light p-5">
-                    <h3>WellCome {loggedInUser.name}</h3>
+                    <h3>WellCome {loggedInUser.name} As A {loggedInUser.isAdmin ? "Admin" : "Client"}</h3>
                     <div className="my-4">
                         <label>Email:</label>
                         <input

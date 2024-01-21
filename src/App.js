@@ -16,6 +16,9 @@ import RegisterScreen from "./components/Home/RegisterScreen/RegisterScreen";
 import AddAmount from "./components/Dashboard/AddAmount/AddAmount";
 import PaymentFailScreen from "./components/Screen/PaymentFailScreen";
 import PaymentSuccessScreen from "./components/Screen/PaymentSuccessScreen";
+import Teams from "./components/Screen/Teams";
+import About from "./components/Screen/About";
+import FAQs from "./components/Screen/FAQs";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
@@ -45,7 +48,7 @@ function App() {
 
   return (
     <>
-      <UserContext.Provider value={{loggedInUser, setLoggedInUser}}>
+      <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
         <Router>
           <Switch>
             <PrivateRoute path="/dashboard">
@@ -98,6 +101,15 @@ function App() {
             </Route>
             <Route path="/reset-password/:token">
               <ResetPassword />
+            </Route>
+            <Route path="/our-teams">
+              <Teams />
+            </Route>
+            <Route path="/faqs">
+              <FAQs />
+            </Route>
+            <Route path="/about">
+              <About />
             </Route>
             <Route exact path="/">
               <Home />

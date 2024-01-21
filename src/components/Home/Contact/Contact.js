@@ -38,7 +38,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="header-bg contact">
+    <div id="contact" className="header-bg contact">
       <div className="container contact-body">
         <div className="row py-5">
           <div className="col-sm-6">

@@ -22,35 +22,43 @@ const RegisterScreen = () => {
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
-    } else {
-      const registerData = {
-        name,
-        email,
-        password,
-      };
-      fetch("https://agency-server-git-main-taher-39.vercel.app/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registerData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message) {
-            toast.success(data.message);
-            setVerificationMessage("Verification email sent. Please check your inbox and click the verification link to complete registration.");
-            setName("");
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
-          } else {
-            toast.error(data.message);
-          }
-        })
-        .catch((err) => toast.error(err.message));
+      return;
     }
+
+    if (password.length < 5) {
+      toast.error("Password must be at least 5 characters long");
+      return;
+    }
+
+    const registerData = {
+      name,
+      email,
+      password,
+    };
+
+    fetch("https://agency-server-git-main-taher-39.vercel.app/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(registerData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
+          toast.success(data.message);
+          setVerificationMessage("Verification email sent. Please check your inbox and click the verification link to complete registration.");
+          setName("");
+          setEmail("");
+          setPassword("");
+          setConfirmPassword("");
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => toast.error(err.message));
   };
+
 
   return (
     <div
@@ -130,15 +138,15 @@ const RegisterScreen = () => {
               </div>
               <button
                 type="submit"
-                className="btn btn-outline-success btn-block"
+                className="btn btn-bg text-light btn-block"
               >
                 Register
               </button>
             </form>
             <div className="row mt-3">
               <div className="col text-center">
-                Have an Account? <Link to="/login">Login</Link>
-                <Link to="/" className='mx-2'>
+                Have an Account? <Link to="/login" className='text-decoration-none'>Login</Link>
+                <Link to="/" className='mx-2 btn btn-outline-success'>
                   Home
                 </Link>
               </div>

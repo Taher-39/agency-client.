@@ -6,16 +6,14 @@ import { UserContext } from "../../../App";
 import { Pagination } from "react-bootstrap";
 
 const Dashboard = () => {
-  const {loggedInUser} = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
 
-  // Get only paid transactions for pagination
   const paidTransactions = loggedInUser?.paymentInfo?.filter(
     (item) => item.paidStatus
   );
 
-  // Get current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentPaymentInfo = paidTransactions?.slice(
@@ -23,7 +21,6 @@ const Dashboard = () => {
     indexOfLastItem
   );
 
-  // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <div>
@@ -63,7 +60,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="right-side col-md-10 bg-light p-5">
-          <h3>WellCome {loggedInUser.name}</h3>
+          <h3>WellCome {loggedInUser.name} As A {loggedInUser.isAdmin ? "Admin" : "Client"}</h3>
           <div className="col-md-4 pt-5 bg-light ">
             <h5>
               Available Wallet Balance:{" "}
@@ -108,7 +105,7 @@ const Dashboard = () => {
 
             <div className="print-button">
               <button
-                className="btn btn-primary"
+                className="btn btn-bg text-light"
                 onClick={() => window.print()}
               >
                 Print

@@ -2,7 +2,6 @@
 
 This is a company website, through which some skilled people provide quality services like website development, graphics designing and video editing.
 
-
 ## Features
 
 ### General Features
@@ -11,21 +10,24 @@ This is a company website, through which some skilled people provide quality ser
 - Smooth routing features with React Router Dom
 - Private and General Routing features for more secure feature
 - Responsive layout for all devices using CSS3 and Bootstrap
+- Sorting Services
+- Search Services
+- Pagination
 
 ### Client Features
 
 - Payment with visa card/mobile banking/bank account using SSL Commarz
 - Review & Rating if client have any order
-- Dashboard where client can see payment history and current wallet balance with printing     feature
+- Dashboard where client can see payment history and current wallet balance with printing feature
 - Order service list with progress status
-- Google/Manual register and login with unique name and email
+- Manual register and login with unique name and email
 - Error/Success handling with react toastify
 - Conditional status color change
 - Send verification code into email when new user try to register
-- Change password/name
+- Update password/name
 - Forgot password
 - Pagination
-- Search Services
+- Delete Account
 
 ### Admin Features
 
@@ -34,13 +36,14 @@ This is a company website, through which some skilled people provide quality ser
 - Update project status
 - Manage user role with toggle admin/client color
 - See email who send email
+- Pagination
+- Delete Account
 
 ### Implement Idea
 
 - Send email when client order new services
 - Using regex check email/password
 - Edit services
-- Sorting Services 
 
 ## Technologies Used
 
@@ -84,7 +87,7 @@ This is a company website, through which some skilled people provide quality ser
 
 ## Links
 
-- Live client: [https://creative-agency-git-main-taher-39.vercel.app/](https://yushi95.medium.com/how-to-create-a-beautiful-readme-for-your-github-profile-36957caa711c)
-- Live server: [https://agency-server-git-main-taher-39.vercel.app/](https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/)
-- Client github: [https://github.com/Taher-39/agency-client](https://dev.to/wst24365888/beautify-your-github-profile-readme-24fg)
-- Server github: [https://github.com/Taher-39/agency-server](https://sarah-hart-landolt.medium.com/6-easy-steps-to-create-a-beautiful-github-profile-readme-edc7840b2c7)
+- Live client: [https://creative-agency-git-main-taher-39.vercel.app/](https://creative-agency-git-main-taher-39.vercel.app/)
+- Live server: [https://agency-server-git-main-taher-39.vercel.app/](https://agency-server-git-main-taher-39.vercel.app/)
+- Client github: [https://github.com/Taher-39/agency-client](https://github.com/Taher-39/agency-client)
+- Server github: [https://github.com/Taher-39/agency-server](https://github.com/Taher-39/agency-server)

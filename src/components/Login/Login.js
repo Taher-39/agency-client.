@@ -94,25 +94,23 @@ const Login = () => {
                 </div>
                 <button
                   type="submit"
-                  className="btn btn-primary btn-block mt-3"
+                  className="btn btn-bg text-light btn-block mt-3"
                 >
                   Login
                 </button>
+                <Link to="/forgot-password" className='btn btn-bg text-light mt-3 mx-3'>Forgot Password?</Link>
               </form>
               <div className="row py-3">
                 <div className="col">
-                  New Customer? <Link to="/register">Register</Link>
-                </div>
-                <div className="col text-right">
-                  <Link to="/forgot-password">Forgot Password?</Link>
+                  New Customer? <Link to="/register" className='text-decoration-none'>Register</Link>
+                  <Link
+                    to="/"
+                    className="btn btn-outline-success btn-block mx-3"
+                  >
+                    Home
+                  </Link>
                 </div>
               </div>
-              <Link
-                to="/"
-                className="btn btn-outline-success btn-block mx-3"
-              >
-                Home
-              </Link>
             </div>
           )}
         </div>
