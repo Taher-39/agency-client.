@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const UploadOrder = () => {
   const { id } = useParams();
-  console.log(id)
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
   const [description, setDescription] = useState("");
   const [orderFile, setOrderFile] = useState();
@@ -28,7 +27,6 @@ const UploadOrder = () => {
         const data = await response.json();
         const services = data.services || [];
         setServiceOptions(services);
-        console.log(services)
 
         const selectedService = services.find((service) => service._id === id);
         if (selectedService) {
@@ -68,15 +66,67 @@ const UploadOrder = () => {
     setOrderFile(e.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
+
+
+  const submitOrder = async (e) => {
     e.preventDefault();
 
-    const newOrderForm = createOrderForm();
+    const requestBody = {
+      name: loggedInUser.name,
+      email: loggedInUser.email,
+      description,
+      status: "pending",
+      service: selectedService,
+      option: selectedOption,
+      price,
+      file: orderFile,
+    };
 
     if (loggedInUser.amount >= price) {
       try {
-        await uploadOrder(newOrderForm);
-        await updateUserAmount(price);
+        const orderResponse = await fetch("https://agency-server-git-main-taher-39.vercel.app/order/upload-order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!orderResponse.ok) {
+          const errorData = await orderResponse.json();
+          throw new Error(`Error uploading order: ${errorData.message}`);
+        }
+
+        const orderData = await orderResponse.json();
+
+        if (orderData.error) {
+          throw new Error(orderData.error);
+        } else {
+          toast.success("Order Submitted, Check Service List");
+        }
+
+        const updateAmountResponse = await fetch(
+          `https://agency-server-git-main-taher-39.vercel.app/auth/users/${userId}/update-amount`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ price }),
+          }
+        );
+
+        if (!updateAmountResponse.ok) {
+          const errorData = await updateAmountResponse.json();
+          throw new Error(errorData.message);
+        } else {
+          const updateAmountData = await updateAmountResponse.json();
+          setLoggedInUser((prevUser) => ({
+            ...prevUser,
+            amount: updateAmountData.user.amount,
+          }));
+        }
+
         history.push("/userOrders");
       } catch (error) {
         toast.error(error.message);
@@ -85,66 +135,6 @@ const UploadOrder = () => {
       toast.error("Your Wallet Price Is Insufficient. Pay From AddMoney Option");
     }
   };
-
-  const createOrderForm = () => {
-    const newOrderForm = new FormData();
-    newOrderForm.append("name", loggedInUser.name);
-    newOrderForm.append("email", loggedInUser.email);
-    newOrderForm.append("description", description);
-    newOrderForm.append("status", "pending");
-    newOrderForm.append("service", selectedService);
-    newOrderForm.append("option", selectedOption);
-    newOrderForm.append("price", price);
-    newOrderForm.append("file", orderFile);
-    return newOrderForm;
-  };
-
-  const uploadOrder = async (newOrderForm) => {
-    const orderResponse = await fetch(
-      "https://agency-server-git-main-taher-39.vercel.app/order/upload-order",
-      {
-        method: "POST",
-        body: newOrderForm,
-      }
-    );
-
-    if (!orderResponse.ok) {
-      throw new Error("Error uploading order");
-    }
-
-    const orderData = await orderResponse.json();
-
-    if (orderData.error) {
-      throw new Error(orderData.error);
-    } else {
-      toast.success("Order Submitted, Check Service List");
-    }
-  };
-
-  const updateUserAmount = async (price) => {
-    const updateAmountResponse = await fetch(
-      `https://agency-server-git-main-taher-39.vercel.app/auth/users/${userId}/update-amount`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ price }),
-      }
-    );
-
-    if (!updateAmountResponse.ok) {
-      const errorData = await updateAmountResponse.json();
-      throw new Error(errorData.message);
-    } else {
-      const updateAmountData = await updateAmountResponse.json();
-      setLoggedInUser((prevUser) => ({
-        ...prevUser,
-        amount: updateAmountData.user.amount,
-      }));
-    }
-  };
-
 
   return (
     <div>
@@ -180,23 +170,7 @@ const UploadOrder = () => {
           <Sidebar />
         </div>
         <div className="right-side col-md-6 bg-light py-5 ps-5">
-          <form onSubmit={handleSubmit}>
-            <input
-              className="form-control w-75 mb-3"
-              type="text"
-              name="name"
-              placeholder="Your name / company's name"
-              defaultValue={loggedInUser.name}
-              disabled
-            />
-            <input
-              className="form-control w-75 mb-3"
-              type="email"
-              name="email"
-              placeholder="Your email address"
-              defaultValue={loggedInUser.email}
-              disabled
-            />
+          <form onSubmit={submitOrder}>
             <h2>Select a Service:</h2>
             <select
               className="form-select w-75 mb-3"
