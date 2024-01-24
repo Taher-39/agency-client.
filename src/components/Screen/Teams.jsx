@@ -91,6 +91,14 @@ const Teams = () => {
                                                     <b>Experience:</b> {member?.member.experience}
                                                 </p>
                                             </div>
+                                            <div className="row ">
+                                                <p className="col-md-6">
+                                                    <b>Country:</b> {member?.member.country}
+                                                </p>
+                                                <p className="col-md-6">
+                                                    <b>City:</b> {member?.member.city}
+                                                </p>
+                                            </div>
                                             {isAdmin ? (
                                                 <div className="row">
                                                     <Button variant="success" onClick={() => handleStatusChange(member.member._id, "pending")}>
@@ -100,12 +108,12 @@ const Teams = () => {
                                                         Withdraw
                                                     </Button>
                                                 </div>
-                                            ) : (<div className="row">
+                                            ) : loggedInUser.email == member.email ? (<div className="row">
 
                                                 <Button variant="danger" className="mt-2" onClick={() => handleWithdraw(member.member._id)}>
                                                     Resign
                                                 </Button>
-                                            </div>)}
+                                            </div>) : <></>}
 
                                         </div>
                                     </div>
@@ -143,14 +151,14 @@ const Teams = () => {
                                                         Withdraw
                                                     </Button>
                                                 </div>
-                                            ) : (<div className="row">
+                                            ) : loggedInUser.email == member.email ? (<div className="row">
                                                 <Button variant="warning" onClick={() => handleEdit(member.member._id)}>
                                                     Edit
                                                 </Button>
                                                 <Button variant="danger" className="mt-2" onClick={() => handleWithdraw(member.member._id)}>
                                                     Withdraw
                                                 </Button>
-                                            </div>)}
+                                            </div>) : <></>}
 
                                         </div>
                                     </div>
