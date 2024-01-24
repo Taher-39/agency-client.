@@ -7,7 +7,7 @@ const TotalOrderListTable = ({ totalOrders }) => {
   const handleStatusChange = (e, id) => {
     const newStatus = e.target.value;
 
-    const updatedOrders = orders.map((order) =>
+    const updatedOrders = orders?.map((order) =>
       order._id === id ? { ...order, status: newStatus } : order
     );
 
@@ -27,7 +27,7 @@ const TotalOrderListTable = ({ totalOrders }) => {
         }
       })
       .catch((error) => {
-        toast.error("Failed to change status.");
+        toast.error("Failed to change status.", error.message);
         setOrders(totalOrders);
       });
   };
@@ -56,20 +56,18 @@ const TotalOrderListTable = ({ totalOrders }) => {
         <table className="table table-borderless">
           <thead>
             <tr>
-              <th>Name</th>
               <th>Email Id</th>
-              <th>Category</th>
+              <th>Service</th>
               <th>Description</th>
               <th>Present Status</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {orders?.map((order) => (
               <tr key={order._id} className="m-3 p-3">
-                <td>{order.name}</td>
                 <td>{order.email}</td>
-                <td>{order.service}</td>
+                <td>{order.serviceName}</td>
                 <td>{order.description}</td>
                 <TD status={order.status} />
                 <td>
@@ -81,10 +79,11 @@ const TotalOrderListTable = ({ totalOrders }) => {
                   >
                     <option value="">Change Status</option>
                     <option value="pending">Pending</option>
-                    <option value="processing">Processing</option>
+                    <option value="progressing">Progressing</option>
                     <option value="done">Done</option>
                   </select>
                 </td>
+
               </tr>
             ))}
           </tbody>

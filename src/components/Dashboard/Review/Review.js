@@ -137,7 +137,7 @@ const Review = () => {
             ></textarea>
 
             <div style={styles.stars} className="my-4">
-              {stars.map((_, index) => {
+              {stars?.map((_, index) => {
                 return (
                   <FaStar
                     key={index}

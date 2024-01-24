@@ -71,7 +71,7 @@ const Services = () => {
 
         <div className="row">
           {services.length ? (
-            services.map((serviceData) => (
+            services?.map((serviceData) => (
               <ServiceCard key={serviceData._id} serviceData={serviceData} />
             ))
           ) : (

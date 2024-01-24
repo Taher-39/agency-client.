@@ -92,7 +92,7 @@ const Dashboard = () => {
               </tbody>
             </table>
             <Pagination>
-              {[...Array(Math.ceil(paidTransactions?.length / itemsPerPage)).keys()].map((number) => (
+              {[...Array(Math.ceil(paidTransactions?.length / itemsPerPage)).keys()]?.map((number) => (
                 <Pagination.Item
                   key={number + 1}
                   active={number + 1 === currentPage}

@@ -10,7 +10,7 @@ const AddService = () => {
   const [serviceData, setServiceData] = useState({
     serviceName: "",
     description: "",
-    subcategories: [{ subcategoryName: "Default Subcategory", price: 0 }],
+    subcategories: [{ subcategoryName: "Default Subcategory", price: 0, duration: 1 }],
   });
   const history = useHistory();
 
@@ -28,6 +28,7 @@ const AddService = () => {
     e.preventDefault();
 
     const { serviceName, description, subcategories } = serviceData;
+    console.log(serviceData)
 
     try {
       const response = await fetch("https://agency-server-git-main-taher-39.vercel.app/services/add-service", {
@@ -38,9 +39,10 @@ const AddService = () => {
         body: JSON.stringify({
           name: serviceName,
           description,
-          prices: subcategories.map(({ subcategoryName, price }) => ({
+          prices: subcategories?.map(({ subcategoryName, price, duration }) => ({
             subcategory: (subcategoryName ? subcategoryName.trim() : "Default Subcategory"),
             price: price || 0,
+            duration: duration || 1,
           })),
         }),
       });
@@ -54,7 +56,7 @@ const AddService = () => {
       setServiceData({
         serviceName: "",
         description: "",
-        subcategories: [{ subcategoryName: "", price: 0 }],
+        subcategories: [{ subcategoryName: "", price: 0, duration: 1 }],
       });
       history.push("/");
     } catch (error) {
@@ -64,7 +66,7 @@ const AddService = () => {
 
 
   const renderSubcategoryInputs = () => {
-    return serviceData.subcategories.map((subcategory, index) => (
+    return serviceData.subcategories?.map((subcategory, index) => (
       <div key={index} className="mb-3">
         <label>Subcategory Name</label>
         <input
@@ -82,6 +84,14 @@ const AddService = () => {
           value={subcategory.price}
           onChange={(e) => handleSubcategoryChange(index, "price", e.target.value)}
         />
+        <label>Duration</label>
+        <input
+          className="form-control w-50 mb-3"
+          type='number'
+          value={serviceData.duration}
+          onChange={(e) => handleInputChange("duration", e.target.value)}
+          required
+        />
       </div>
     ));
   };
@@ -89,7 +99,7 @@ const AddService = () => {
   const addSubcategory = () => {
     setServiceData({
       ...serviceData,
-      subcategories: [...serviceData.subcategories, { subcategoryName: "", price: 0 }],
+      subcategories: [...serviceData.subcategories, { subcategoryName: "", price: 0, duration: 1 }],
     });
   };
 
@@ -158,6 +168,7 @@ const AddService = () => {
                 onChange={(e) => handleInputChange("description", e.target.value)}
                 required
               />
+
             </div>
             <button className="btn btn-bg text-light" type="submit">
               Submit

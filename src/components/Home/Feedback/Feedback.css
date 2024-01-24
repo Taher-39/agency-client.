@@ -1,0 +1,15 @@
+.truncated-text {
+    height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.full-text {
+    height: auto;
+    overflow: visible;
+}
+
+
+.card-body {
+    height: 270px;
+}

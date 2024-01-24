@@ -6,7 +6,7 @@ const ServiceCard = ({ serviceData }) => {
 
   const getStartPrice = () => {
     if (prices && prices.length > 0) {
-      const priceArray = prices.map((price) => price.price);
+      const priceArray = prices?.map((price) => price.price);
       const minPrice = Math.min(...priceArray);
 
       return minPrice;

@@ -25,7 +25,10 @@ import { Link } from "react-router-dom";
 import Account from "./components/Dashboard/Account/Account";
 import EmailVerificationScreen from "./components/Screen/EmailVerificationScreen";
 import ForgotPassword from "./components/Screen/ForgotPassword";
+import JoinUsScreen from "./components/Screen/JoinUsScreen";
 import ResetPassword from "./components/Screen/ResetPassword";
+import UserOrderDetails from "./components/Dashboard/UserOrderList/UserOrderDetails";
+import ContactScreen from "./components/Screen/ContactScreen";
 export const UserContext = createContext();
 
 function NotFound() {
@@ -111,6 +114,15 @@ function App() {
             <Route path="/about">
               <About />
             </Route>
+            <PrivateRoute path="/join-us">
+              <JoinUsScreen />
+            </PrivateRoute>
+            <PrivateRoute path="/user-order-details/:orderId">
+              <UserOrderDetails />
+            </PrivateRoute>
+            <PrivateRoute path="/contact-screen">
+              <ContactScreen />
+            </PrivateRoute>
             <Route exact path="/">
               <Home />
             </Route>

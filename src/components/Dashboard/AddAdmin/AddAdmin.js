@@ -44,7 +44,7 @@ const AddAdmin = () => {
         throw new Error("Error updating isAdmin status");
       }
       setUsers((prevUsers) =>
-        prevUsers.map((user) =>
+        prevUsers?.map((user) =>
           user._id === userId ? { ...user, isAdmin: isAdminStatus } : user
         )
       );
@@ -104,7 +104,7 @@ const AddAdmin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((user) => (
+                  {users?.map((user) => (
                     <tr key={user._id} className="m-3 p-3">
                       <td>{user.name}</td>
                       <td>{user.email}</td>

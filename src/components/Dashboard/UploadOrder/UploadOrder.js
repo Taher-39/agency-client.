@@ -181,7 +181,7 @@ const UploadOrder = () => {
               <option value="" disabled hidden>
                 Select a Service
               </option>
-              {serviceOptions.map((service) => (
+              {serviceOptions?.map((service) => (
                 <option key={service._id} value={service._id}>
                   {service.name}
                 </option>
@@ -200,7 +200,7 @@ const UploadOrder = () => {
                   <option value="">Select an Option</option>
                   {serviceOptions
                     .find((service) => service._id === selectedService)
-                    .prices.map((option) => (
+                    .prices?.map((option) => (
                       <option key={option._id} value={option._id}>
                         {option.subcategory}
                       </option>
