@@ -5,9 +5,10 @@ import navLogo from "../../../assets/logos/logo.png";
 import { Link } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { toast } from "react-toastify";
+import { MdEdit } from "react-icons/md";
 
 const ManageServices = () => {
-  const {loggedInUser} = useContext(UserContext);
+  const { loggedInUser } = useContext(UserContext);
   const [services, setServices] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -30,7 +31,7 @@ const ManageServices = () => {
           if (data) {
             toast.success(data.message);
             setServices((prevServices) =>
-              prevServices.filter((service) => service._id !== id)
+              prevServices?.filter((service) => service._id !== id)
             );
           } else {
             toast.error(data.statusText);
@@ -41,6 +42,10 @@ const ManageServices = () => {
         });
     }
   };
+
+  const handleServiceEdit = (id) => {
+    toast.success(`This Feature Comming Soon ${id}`)
+  }
 
   return (
     <div>
@@ -82,7 +87,7 @@ const ManageServices = () => {
                 <tr>
                   <th>Service Name</th>
                   <th>Description</th>
-                  {/* <th>Image</th> */}
+                  <th>Edit</th>
                   <th>Delete</th>
                 </tr>
               </thead>
@@ -91,13 +96,14 @@ const ManageServices = () => {
                   <tr key={item._id} className="m-3 p-3">
                     <td>{item.name}</td>
                     <td>{item.description}</td>
-                    {/* <td>
-                      <img
-                        style={{ width: "25px", height: "25px" }}
-                        src={`data:image/png;base64, ${item.image?.img}`}
-                        alt=""
-                      />
-                    </td> */}
+                    <td>
+                      <button
+                        className="text-danger cursor-pointer btn"
+                        onClick={() => handleServiceEdit(item._id)}
+                      >
+                        <MdEdit />
+                      </button>
+                    </td>
                     <td>
                       <button
                         className="text-danger cursor-pointer btn"

@@ -4,11 +4,13 @@ import google from '../../../assets/logos/google.png';
 import netflix from '../../../assets/logos/netflix.png';
 import slack from '../../../assets/logos/slack.png';
 import uber from '../../../assets/logos/uber.png';
+import './Customer.css';
 
 const Customer = () => {
+
     return (
         <div className="container">
-            <div className='client d-sm-flex justify-content-between py-5'>
+            <div className='client mobile-hidden d-md-flex justify-content-between py-5'>
                 <div>
                     <img src={airbnb} style={{ width: '100px' }} alt="" />
                 </div>

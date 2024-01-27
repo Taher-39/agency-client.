@@ -71,7 +71,7 @@ const AddService = () => {
         <label>Subcategory Name</label>
         <input
           type="text"
-          className="form-control"
+          className="form-control w-50"
           placeholder="e.g., Single Page"
           value={subcategory.subcategoryName}
           onChange={(e) => handleSubcategoryChange(index, "subcategoryName", e.target.value)}
@@ -79,12 +79,12 @@ const AddService = () => {
         <label>Price</label>
         <input
           type="number"
-          className="form-control"
+          className="form-control w-50"
           placeholder="e.g., 2000"
           value={subcategory.price}
           onChange={(e) => handleSubcategoryChange(index, "price", e.target.value)}
         />
-        <label>Duration</label>
+        <label>Duration (Day)</label>
         <input
           className="form-control w-50 mb-3"
           type='number'

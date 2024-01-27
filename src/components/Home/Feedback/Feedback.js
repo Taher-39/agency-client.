@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Feedback.css"; // Import your custom CSS file for styling
+import "./Feedback.css";
 
 const Feedback = () => {
   const [userFeedback, setUserFeedback] = useState([]);
@@ -36,7 +36,7 @@ const Feedback = () => {
 
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = userFeedback.slice(indexOfFirstReview, indexOfLastReview);
+  const currentReviews = userFeedback?.slice(indexOfFirstReview, indexOfLastReview);
 
   return (
     <div className="my-5">

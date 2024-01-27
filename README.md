@@ -94,3 +94,36 @@ This is a company website, through which some skilled people provide quality ser
 - Client github: [https://github.com/Taher-39/agency-client](https://github.com/Taher-39/agency-client)
 
 - Server github: [https://github.com/Taher-39/agency-server](https://github.com/Taher-39/agency-server)
+
+
+## How to Run the Client Code
+
+Follow these steps to run the client code locally:
+
+1. Clone the client repository:
+
+    ```bash
+    git clone https://github.com/Taher-39/agency-client.git
+    ```
+
+2. Change into the project directory:
+
+    ```bash
+    cd agency-client
+    ```
+
+3. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+4. Start the development server:
+
+    ```bash
+    npm start
+    ```
+
+   The client will be accessible at [http://localhost:3000](http://localhost:3000).
+
+5. Explore the features and functionalities of the Creative Agency website locally.

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const Teams = () => {
     const [teamMembers, setTeamMembers] = useState([]);
     const { loggedInUser } = useContext(UserContext);
-    const [isAdmin, setIsAdmin] = useState(loggedInUser.isAdmin);
+    const [isAdmin] = useState(loggedInUser.isAdmin);
     useEffect(() => {
 
         fetch("https://agency-server-git-main-taher-39.vercel.app/member/get-all-members")
@@ -56,7 +56,7 @@ const Teams = () => {
             if (response.status === 200) {
                 toast.success(response.message);
                 setTeamMembers((prevMembers) =>
-                    prevMembers.filter((member) => member.member._id !== memberId)
+                    prevMembers?.filter((member) => member.member._id !== memberId)
                 );
             } else {
                 toast.error(response.statusText);
@@ -74,14 +74,16 @@ const Teams = () => {
                 <h3>Already Works For Creative Agency</h3>
                 <Row>
                     {teamMembers
-                        .filter(member => member.member.memberStatus === "done")
+                        ?.filter(member => member.member.memberStatus === "done")
                         ?.map((member, index) => (
                             <Col md={4} key={index} className="mb-3">
                                 <div className="col-md-12 col-sm-6 col-12 my-3">
                                     <div className="card shadow">
                                         <div className="card-body">
-                                            <h4>{member?.name}</h4>
-                                            <p><b>Gender:</b> {member?.member.gender}</p>
+                                            <div className="row">
+                                                <h4 className="col-md-6">{member?.name}</h4>
+                                                <p className="col-md-6"><b>Gender:</b> {member?.member.gender}</p>
+                                            </div>
 
                                             <div className="row ">
                                                 <p className="col-md-6">
@@ -101,14 +103,11 @@ const Teams = () => {
                                             </div>
                                             {isAdmin ? (
                                                 <div className="row">
-                                                    <Button variant="success" onClick={() => handleStatusChange(member.member._id, "pending")}>
-                                                        Mark as pending
-                                                    </Button>
                                                     <Button variant="danger" className="mt-2" onClick={() => handleWithdraw(member.member._id)}>
-                                                        Withdraw
+                                                        Fired
                                                     </Button>
                                                 </div>
-                                            ) : loggedInUser.email == member.email ? (<div className="row">
+                                            ) : loggedInUser.email === member.email ? (<div className="row">
 
                                                 <Button variant="danger" className="mt-2" onClick={() => handleWithdraw(member.member._id)}>
                                                     Resign
@@ -125,15 +124,18 @@ const Teams = () => {
                 <h3>Want To Works For Creative Agency</h3>
                 <Row>
                     {teamMembers
-                        .filter(member => member.member.memberStatus === "pending")
+                        ?.filter(member => member.member.memberStatus === "pending")
                         ?.map((member, index) => (
                             <Col md={4} key={index} className="mb-3">
                                 <div className="col-md-12 col-sm-6 col-12 my-3">
                                     <div className="card shadow">
                                         <div className="card-body">
-                                            <h4>{member?.name}</h4>
-                                            <p><b>Gender:</b> {member?.member.gender}</p>
 
+                                            <div className="row ">
+                                                <h4 className="col-md-6">{member?.name}</h4>
+                                                <p className="col-md-6"><b>Gender:</b> {member?.member.gender}</p>
+
+                                            </div>
                                             <div className="row ">
                                                 <p className="col-md-6">
                                                     <b>Role:</b> {member?.member.role}
@@ -156,10 +158,10 @@ const Teams = () => {
                                                         Mark as Done
                                                     </Button>
                                                     <Button variant="danger" className="mt-2" onClick={() => handleWithdraw(member.member._id)}>
-                                                        Withdraw
+                                                        Delete
                                                     </Button>
                                                 </div>
-                                            ) : loggedInUser.email == member.email ? (<div className="row">
+                                            ) : loggedInUser.email === member.email ? (<div className="row">
                                                 <Button variant="warning" onClick={() => handleEdit(member.member._id)}>
                                                     Edit
                                                 </Button>
